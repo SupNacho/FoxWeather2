@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">FoxWeather</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tomorrow_prediction">Tomorrow prediction</string>
+    <string name="humidity_prediction">Humidity prediction</string>
+    <string name="week_prediction">Week prediction</string>
+    <string name="save_settings">save settings</string>
+    <string name="open_weather_maps_app_id">cfdb77e65d320ca11996d5fee7f947bd</string>
+    <string name="add_new_city">Add new city for watching:</string>
+    <string name="hint_add_city">type city name here</string>
+    <string name="button_text_add_city">Add city</string>
+    <string name="button_text_edit">edit</string>
+    <string name="button_text_settings">settings</string>
+
+    <string-array name="cities">
+        <item>Moscow</item>
+        <item>Saint Petersburg</item>
+        <item>Krasnodar</item>
+        <item>Yakutsk</item>
+        <item>London</item>
+        <item>Moscow</item>
+        <item>Saint Petersburg</item>
+        <item>Krasnodar</item>
+        <item>Yakutsk</item>
+        <item>London</item>
+        <item>Moscow</item>
+        <item>Saint Petersburg</item>
+        <item>Krasnodar</item>
+        <item>Yakutsk</item>
+        <item>London</item>
+        <item>Moscow</item>
+        <item>Saint Petersburg</item>
+        <item>Krasnodar</item>
+        <item>Yakutsk</item>
+        <item>London</item>
+        <item>Moscow</item>
+        <item>Saint Petersburg</item>
+        <item>Krasnodar</item>
+        <item>Yakutsk</item>
+        <item>London</item>
+        <item>Moscow</item>
+        <item>Saint Petersburg</item>
+        <item>Krasnodar</item>
+        <item>Yakutsk</item>
+        <item>London</item>
+        <item>Moscow</item>
+        <item>Saint Petersburg</item>
+        <item>Krasnodar</item>
+        <item>Yakutsk</item>
+        <item>London</item>
+        <item>Moscow</item>
+        <item>Saint Petersburg</item>
+        <item>Krasnodar</item>
+        <item>Yakutsk</item>
+        <item>London</item>
+        <item>Moscow</item>
+        <item>Saint Petersburg</item>
+        <item>Krasnodar</item>
+        <item>Yakutsk</item>
+        <item>London</item>
+    </string-array>
+
+    <string-array name="cities_temps">
+        <item>+ 5 C</item>
+        <item>+ 2 C</item>
+        <item>+ 25 C</item>
+        <item>- 25 C</item>
+        <item>+ 10 C</item>
+    </string-array>
+</resources>

@@ -1,0 +1,18 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_standart_LR">15dp</dimen>
+    <dimen name="city_list_text_size">20sp</dimen>
+    <dimen name="orientation_vertical">1</dimen>
+    <dimen name="orientation_horizontal">0</dimen>
+    <dimen name="zero_dp">0dp</dimen>
+    <dimen name="header_size_26">26sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+    <dimen name="recycler_top_marg_60">60dp</dimen>
+    <dimen name="day_item_margin_3dp">3dp</dimen>
+    <dimen name="text_size_day_item_18sp">18sp</dimen>
+</resources>

@@ -1,0 +1,24 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fw.supernacho.ru.foxweather.AddCityFragment"
+    android:orientation="vertical"
+    android:background="@color/backGround">
+
+    <EditText
+        android:id="@+id/edit_text_add_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_standart_LR"
+        android:textSize="@dimen/text_size_20"
+        android:hint="@string/hint_add_city"/>
+    <Button
+        android:id="@+id/button_add_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_standart_LR"
+        android:text="Add city"/>
+
+</LinearLayout>

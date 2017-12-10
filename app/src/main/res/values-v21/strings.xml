@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tomorrow_prediction">Tomorrow prediction</string>
+    <string name="save_settings">save settings</string>
+    <string name="add_new_city">Add new city for watching:</string>
+    <string name="hint_add_city">type city name here</string>
+</resources>

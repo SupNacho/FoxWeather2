@@ -1,0 +1,24 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fw.supernacho.ru.foxweather.MainFragment"
+    android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recicler_view_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/zero_dp"
+            android:layout_margin="@dimen/margin_standart_LR"
+            android:layout_weight="7"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_week"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero_dp"
+            android:layout_margin="@dimen/margin_standart_LR"
+            android:layout_weight="10"
+            android:background="@color/colorAccent"/>
+
+</LinearLayout>
