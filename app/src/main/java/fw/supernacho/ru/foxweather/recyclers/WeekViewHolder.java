@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -23,7 +24,7 @@ import fw.supernacho.ru.foxweather.data.DayPrediction;
 public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private TextView textViewDayDate;
-    private TextView textViewDayIcon;
+    private ImageView imageViewDayIcon;
     private TextView textViewDayTemp;
     private Context context;
     private List<DayPrediction> daysList;
@@ -34,7 +35,7 @@ public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         this.context = context;
         itemView.setOnClickListener(this);
         textViewDayDate = itemView.findViewById(R.id.text_view_day_date);
-        textViewDayIcon = itemView.findViewById(R.id.text_view_day_icon);
+        imageViewDayIcon = itemView.findViewById(R.id.image_view_day_icon);
         textViewDayTemp = itemView.findViewById(R.id.text_view_day_temp);
         daysList = MainData.getInstance().getWeekPrediction().getDaysList();
         timeStamp = new SimpleDateFormat("E, dd MMMM");
@@ -44,8 +45,36 @@ public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     void bind (int position){
         DayPrediction day = daysList.get(position);
         textViewDayDate.setText(timeStamp.format(day.getDayDt() * 1000));
-        textViewDayIcon.setText(String.valueOf(day.getDayIcoId()));
+        setIcon(day.getDayIcoId());
         textViewDayTemp.setText(String.valueOf(day.getDayTemp()));
+    }
+
+    private void setIcon(int iconId){
+        int id = iconId / 100;
+        if (iconId == 800){
+            imageViewDayIcon.setImageResource(R.drawable.weather_icon_sun8001);
+        } else {
+            switch (id) {
+                case 2:
+                    imageViewDayIcon.setImageResource(R.drawable.weather_icon_thunder200);
+                    break;
+                case 3:
+                    imageViewDayIcon.setImageResource(R.drawable.weather_icon_drizzle300);
+                    break;
+                case 5:
+                    imageViewDayIcon.setImageResource(R.drawable.weather_icon_rain500);
+                    break;
+                case 6:
+                    imageViewDayIcon.setImageResource(R.drawable.weather_icon_snow600);
+                    break;
+                case 7:
+                    imageViewDayIcon.setImageResource(R.drawable.weather_icon_mist700);
+                    break;
+                case 8:
+                    imageViewDayIcon.setImageResource(R.drawable.weather_icon_clouds801);
+                    break;
+            }
+        }
     }
 
     @Override

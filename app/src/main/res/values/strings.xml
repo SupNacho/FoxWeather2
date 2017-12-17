@@ -16,6 +16,8 @@
     <string name="button_text_add_city">Add city</string>
     <string name="button_text_edit">edit</string>
     <string name="button_text_settings">settings</string>
+    <string name="context_menu_remove_city">Remove</string>
+    <string name="icon_remove_city">icon_remove_city</string>
 
     <string-array name="cities">
         <item>Moscow</item>

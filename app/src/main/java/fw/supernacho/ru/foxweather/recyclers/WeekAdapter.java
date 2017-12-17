@@ -30,6 +30,7 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekViewHolder>{
 
     @Override
     public int getItemCount() {
+        System.out.println(">>>> Days in list: " + MainData.getInstance().getWeekPrediction().getDaysList().size());
         return MainData.getInstance().getWeekPrediction().getDaysList().size();
     }
 }

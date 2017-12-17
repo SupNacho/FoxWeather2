@@ -9,25 +9,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AddCityFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AddCityFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class AddCityFragment extends Fragment implements View.OnClickListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private Context mainActivity;
@@ -36,18 +27,9 @@ public class AddCityFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
 
     public AddCityFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddCityFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static AddCityFragment newInstance(String param1, String param2) {
         AddCityFragment fragment = new AddCityFragment();
         Bundle args = new Bundle();
@@ -74,7 +56,6 @@ public class AddCityFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -98,33 +79,26 @@ public class AddCityFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()){
             case R.id.button_add_city:
                 String cityName = editTextNewCity.getText().toString();
-                if (cityName != null && !cityName.isEmpty()) {
-                    MainData.getInstance().addCity(cityName);
-                    FragmentTransaction transaction = ((MainActivity) mainActivity).getSupportFragmentManager().beginTransaction();
-                    transaction.remove(this);
-                    transaction.commit();
-                    editTextNewCity.setText(null);
-                    editTextNewCity.clearFocus();
-                    ((MainActivity) mainActivity).getWeatherPreference().setCities(MainData.getInstance().getCities());
-                    ((MainActivity) mainActivity).getWeatherPreference().setCity(cityName);
+                if (!cityName.isEmpty()) {
+                    if(MainData.getInstance().addCity(cityName)) {
+                        editTextNewCity.clearFocus();
+                        editTextNewCity.setText(null);
+                        ((MainActivity) mainActivity).updateWeatherData(cityName);
+                        InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (inputManager != null) {
+                            inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        }
+                        FragmentTransaction transaction = ((MainActivity) mainActivity).getSupportFragmentManager().beginTransaction();
+                        transaction.remove(this);
+                        transaction.commit();
+                    }
                 } else {
                     Snackbar.make(view, "Empty City name field.", Snackbar.LENGTH_SHORT).show();
                 }
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

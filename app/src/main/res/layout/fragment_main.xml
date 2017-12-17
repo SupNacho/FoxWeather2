@@ -4,7 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="fw.supernacho.ru.foxweather.MainFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/backGround">
+    <TextView
+        android:id="@+id/text_view_city_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_standart_LR"
+        android:textAlignment="center"
+        android:textSize="@dimen/header_size_26"
+        android:textStyle="bold"
+        tools:text="MOSCOW"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recicler_view_hours"
@@ -18,7 +28,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/zero_dp"
             android:layout_margin="@dimen/margin_standart_LR"
-            android:layout_weight="10"
-            android:background="@color/colorAccent"/>
+            android:layout_weight="10"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"></FrameLayout>
 
 </LinearLayout>

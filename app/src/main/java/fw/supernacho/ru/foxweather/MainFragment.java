@@ -9,21 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import fw.supernacho.ru.foxweather.recyclers.DaysAdapter;
 import fw.supernacho.ru.foxweather.recyclers.WeekAdapter;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MainFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MainFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MainFragment extends Fragment{
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -35,6 +26,7 @@ public class MainFragment extends Fragment{
     private WeatherInfoListener mainActivity;
     private DaysAdapter daysAdapter;
     private WeekAdapter weekAdapter;
+    private TextView textViewCityName;
 
     interface WeatherInfoListener {
         void onListItemClick(int id);
@@ -48,17 +40,9 @@ public class MainFragment extends Fragment{
 
 
     public MainFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MainFragment.
-     */
+
     public static MainFragment newInstance(String param1, String param2) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
@@ -80,13 +64,11 @@ public class MainFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         init(view);
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -97,12 +79,6 @@ public class MainFragment extends Fragment{
     public void onAttach(Context context) {
         mainActivity = (WeatherInfoListener) context;
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -111,22 +87,12 @@ public class MainFragment extends Fragment{
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
     private void init(View view){
+        textViewCityName = view.findViewById(R.id.text_view_city_name);
         daysAdapter = ((MainActivity) mainActivity).getDaysAdapter();
         weekAdapter = ((MainActivity) mainActivity).getWeekAdapter();
         LinearLayoutManager dayLayoutManager = new LinearLayoutManager((Context) mainActivity);
@@ -139,5 +105,9 @@ public class MainFragment extends Fragment{
         hoursRecycler.setAdapter(daysAdapter);
         weekRecycler.setLayoutManager(weekLayoutManager);
         weekRecycler.setAdapter(weekAdapter);
+    }
+
+    public void setCityLabel(String cityName){
+        textViewCityName.setText(cityName);
     }
 }
