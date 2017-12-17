@@ -15,4 +15,7 @@
     <dimen name="recycler_top_marg_60">60dp</dimen>
     <dimen name="day_item_margin_3dp">3dp</dimen>
     <dimen name="text_size_day_item_18sp">18sp</dimen>
+    <dimen name="margin_TD_7dp">7dp</dimen>
+    <dimen name="days_text_padd_20dp">20dp</dimen>
+    <dimen name="text_view_days_date_16sp">16sp</dimen>
 </resources>

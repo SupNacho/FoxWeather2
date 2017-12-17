@@ -13,7 +13,7 @@ import fw.supernacho.ru.foxweather.MainData;
  */
 
 public class CityAdapter extends RecyclerView.Adapter<CityViewHolder>{
-    Context context;
+    private Context context;
     public CityAdapter(Context context){
         this.context = context;
     }

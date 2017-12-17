@@ -1,8 +1,10 @@
 package fw.supernacho.ru.foxweather;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,10 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import fw.supernacho.ru.foxweather.data.DayPrediction;
 import fw.supernacho.ru.foxweather.data.HourWeather;
 import fw.supernacho.ru.foxweather.data.WeatherDataLoader;
@@ -42,15 +41,17 @@ public class MainActivity extends AppCompatActivity
     public static final int HORIZONTAL = 0;
     public static final int VERTICAL = 1;
     private static final int HOURS_PERDICT_ELEMENTS = 8;
-    private static final String CITY_ARRAY = "CITY_ARRAY";
     private PreferencesFragment preferencesFragment;
     private AddCityFragment addCityFragment;
     private DrawerLayout drawer;
     private WeatherPreference weatherPreference;
     private final Handler handler = new Handler();
+    private MainFragment mainFragment;
 
     private DaysAdapter daysAdapter;
     private WeekAdapter weekAdapter;
+    private CityAdapter cityAdapter;
+    private boolean isMenuEditable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +59,25 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = findViewById(R.id.fab_share_weather);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plane");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Some subject");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Some weather data");
+                startActivity(shareIntent);
+            }
+        });
+
         initRecyclers();
+        MainData.getInstance().setContext(getApplicationContext());
+        MainData.getInstance().setMainActivity(this);
         if (savedInstanceState == null) {
             init();
             updateWeatherData(weatherPreference.getCity());
-            loadUserCities();
         }
 
         drawer = findViewById(R.id.drawer_layout);
@@ -92,12 +107,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             openPrefs();
             return true;
@@ -124,7 +134,8 @@ public class MainActivity extends AppCompatActivity
                 drawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.button_edit:
-                Snackbar.make(view, "Edit", Snackbar.LENGTH_SHORT).show();
+                isMenuEditable = !isMenuEditable;
+                cityAdapter.notifyDataSetChanged();
                 break;
             case R.id.button_settings:
                 openPrefs();
@@ -141,7 +152,7 @@ public class MainActivity extends AppCompatActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(VERTICAL);
         cityRecycler.setLayoutManager(layoutManager);
-        CityAdapter cityAdapter = new CityAdapter(this);
+        cityAdapter = new CityAdapter(this);
         daysAdapter = new DaysAdapter(this);
         weekAdapter = new WeekAdapter(this);
         cityRecycler.setAdapter(cityAdapter);
@@ -152,7 +163,7 @@ public class MainActivity extends AppCompatActivity
         weatherPreference = new WeatherPreference(this);
         preferencesFragment = PreferencesFragment.newInstance(null, null);
         addCityFragment = AddCityFragment.newInstance(null, null);
-        MainFragment mainFragment = MainFragment.newInstance(null,null);
+        mainFragment = MainFragment.newInstance(null,null);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, mainFragment);
         fragmentTransaction.commit();
@@ -166,24 +177,16 @@ public class MainActivity extends AppCompatActivity
         buttonSetting.setOnClickListener(this);
     }
 
-    private void loadUserCities() {
-        Set<String> restoreCities = new WeatherPreference(this).getCities();
-        for (String restoreCity : restoreCities) {
-            MainData.getInstance().addCity(restoreCity);
-        }
-    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putStringArrayList(CITY_ARRAY, (ArrayList<String>) MainData.getInstance().getCities());
     }
 
     @Override
     public void onListItemClick(int id) {
-        String city = MainData.getInstance().getCities().get(id);
-        weatherPreference.setCity(city);
+        String city = MainData.getInstance().getCities().get(id).getCityName();
         System.out.println(city);
+        weatherPreference.setCity(city);
         updateWeatherData(city);
         drawer.closeDrawer(GravityCompat.START);
     }
@@ -209,9 +212,10 @@ public class MainActivity extends AppCompatActivity
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            renderWeather(json);
+                            renderWeather(json, city);
                             daysAdapter.notifyDataSetChanged();
                             weekAdapter.notifyDataSetChanged();
+                            mainFragment.setCityLabel(city);
                         }
                     });
 
@@ -220,7 +224,7 @@ public class MainActivity extends AppCompatActivity
         }.start();
     }
 
-    private void renderWeather(JSONObject json){
+    private void renderWeather(JSONObject json, String cityName){
         Log.d(LOG_TAG, "json " + json.toString());
         try {
 
@@ -243,10 +247,16 @@ public class MainActivity extends AppCompatActivity
                     JSONObject main = hour.getJSONObject("main");
                     JSONObject details = hour.getJSONArray("weather").getJSONObject(0);
                     if (hour.getString("dt_txt").contains("21")) {
+                        if (week.size() >= 5) break;
+                        System.out.println(">>>> Add to list: " + week.size());
                         week.add(new DayPrediction(details.getInt("id"), hour.getLong("dt"),
                                 main.getDouble("temp")));
                     }
             }
+
+            HourWeather hourWeather = hours.get(0);
+            MainData.getInstance().saveCityStat(cityName, hourWeather.getDt(),
+                    (int) hourWeather.getTemp(), hourWeather.getId(), json.toString() );
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -259,4 +269,13 @@ public class MainActivity extends AppCompatActivity
     public WeekAdapter getWeekAdapter() {
         return weekAdapter;
     }
+
+    public CityAdapter getCityAdapter() {
+        return cityAdapter;
+    }
+
+    public boolean isMenuEditable() {
+        return isMenuEditable;
+    }
+
 }

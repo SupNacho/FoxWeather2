@@ -8,18 +8,19 @@
     <TextView
         android:id="@+id/text_view_day_date"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/day_item_margin_3dp"
-        android:textSize="@dimen/text_size_day_item_18sp"
+        android:padding="@dimen/days_text_padd_20dp"
+        android:textSize="@dimen/text_view_days_date_16sp"
         android:text="Su, 10 december"
         android:layout_weight="8"/>
-    <TextView
-        android:id="@+id/text_view_day_icon"
-        android:layout_width="0dp"
+    <ImageView
+        android:id="@+id/image_view_day_icon"
+        android:src="@drawable/weather_icon_rain500"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/day_item_margin_3dp"
         android:textSize="@dimen/text_size_day_item_18sp"
-        android:text="804"
         android:layout_weight="2"/>
     <TextView
         android:id="@+id/text_view_day_temp"

@@ -40,6 +40,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_text_add_city"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/button_text"
+                android:layout_marginBottom="1dp"
                 android:layout_weight="0"/>
 
             <Button
@@ -47,6 +50,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_text_edit"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/button_text"
+                android:layout_marginBottom="1dp"
                 android:layout_weight="0"/>
 
             <Button
@@ -54,6 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_text_settings"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/button_text"
                 android:layout_weight="0"/>
 
         </LinearLayout>

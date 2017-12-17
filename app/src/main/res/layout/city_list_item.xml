@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/main_frame"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <TextView
         android:id="@+id/city_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/main_frame"
+        app:layout_constraintTop_toTopOf="@id/main_frame"
         android:layout_marginLeft="@dimen/margin_standart_LR"
-        android:layout_marginTop="@dimen/margin_standart_LR"
+        android:layout_marginTop="@dimen/margin_TD_7dp"
+        android:layout_marginBottom="@dimen/margin_TD_7dp"
         android:layout_marginRight="@dimen/margin_standart_LR"
         android:textSize="@dimen/city_list_text_size"
         tools:text="Cloudy"/>
-    <TextView
-        android:id="@+id/text_view_day_temp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_standart_LR"
-        android:layout_marginTop="@dimen/margin_standart_LR"
-        android:layout_marginRight="@dimen/margin_standart_LR"
-        android:text="temp: +5C"/>
 
-</LinearLayout>
+    <ImageButton
+        android:contentDescription="@string/icon_remove_city"
+        android:id="@+id/button_delete_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/margin_standart_LR"
+        android:src="@android:drawable/ic_input_delete"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="@string/context_menu_remove_city"
+        app:layout_constraintRight_toRightOf="@id/main_frame"
+        app:layout_constraintTop_toTopOf="@id/main_frame"
+        android:layout_marginEnd="@dimen/margin_standart_LR"/>
+</android.support.constraint.ConstraintLayout>

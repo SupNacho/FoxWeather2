@@ -3,4 +3,6 @@
     <dimen name="margin_standart_LR">15dp</dimen>
     <dimen name="city_list_text_size">20sp</dimen>
     <dimen name="header_size_26">26sp</dimen>
+    <dimen name="days_text_padd_20dp">20dp</dimen>
+    <dimen name="text_view_days_date_16sp">16sp</dimen>
 </resources>
