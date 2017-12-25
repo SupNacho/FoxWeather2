@@ -79,7 +79,7 @@ public class DaysViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View view) {
-//        showMoreInfo(this.getLayoutPosition());
+//        todo: some functional to view more details
 
     }
 

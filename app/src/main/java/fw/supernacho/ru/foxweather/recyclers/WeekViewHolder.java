@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import fw.supernacho.ru.foxweather.MainActivity;
 import fw.supernacho.ru.foxweather.MainData;
@@ -38,7 +39,7 @@ public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         imageViewDayIcon = itemView.findViewById(R.id.image_view_day_icon);
         textViewDayTemp = itemView.findViewById(R.id.text_view_day_temp);
         daysList = MainData.getInstance().getWeekPrediction().getDaysList();
-        timeStamp = new SimpleDateFormat("E, dd MMMM");
+        timeStamp = new SimpleDateFormat("E, dd MMMM", Locale.US);
 
     }
 
@@ -79,7 +80,7 @@ public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View view) {
-//        showMoreInfo(this.getLayoutPosition());
+// TODO: 25.12.2017 add some functional for view more details
 
     }
 

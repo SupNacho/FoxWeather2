@@ -1,15 +1,16 @@
 package fw.supernacho.ru.foxweather;
 
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,39 +20,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
-import fw.supernacho.ru.foxweather.data.DayPrediction;
-import fw.supernacho.ru.foxweather.data.HourWeather;
-import fw.supernacho.ru.foxweather.data.WeatherDataLoader;
 import fw.supernacho.ru.foxweather.prefs.WeatherPreference;
 import fw.supernacho.ru.foxweather.recyclers.CityAdapter;
 import fw.supernacho.ru.foxweather.recyclers.DaysAdapter;
 import fw.supernacho.ru.foxweather.recyclers.WeekAdapter;
+import fw.supernacho.ru.foxweather.services.WeatherService;
+import fw.supernacho.ru.foxweather.widget.WeatherWidget;
 
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener , MainFragment.WeatherInfoListener {
 
-    private static final String LOG_TAG = "--++--";
     public static final int HORIZONTAL = 0;
     public static final int VERTICAL = 1;
-    private static final int HOURS_PERDICT_ELEMENTS = 8;
     private PreferencesFragment preferencesFragment;
     private AddCityFragment addCityFragment;
     private DrawerLayout drawer;
     private WeatherPreference weatherPreference;
-    private final Handler handler = new Handler();
-    private MainFragment mainFragment;
 
     private DaysAdapter daysAdapter;
     private WeekAdapter weekAdapter;
     private CityAdapter cityAdapter;
     private boolean isMenuEditable = false;
+
+    private boolean serviceBind = false;
+    private ServiceConnection serviceConnection;
+    WeatherService weatherService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +70,10 @@ public class MainActivity extends AppCompatActivity
         initRecyclers();
         MainData.getInstance().setContext(getApplicationContext());
         MainData.getInstance().setMainActivity(this);
+        weatherPreference = new WeatherPreference(this);
+        initService(weatherPreference.getCity());
         if (savedInstanceState == null) {
             init();
-            updateWeatherData(weatherPreference.getCity());
         }
 
         drawer = findViewById(R.id.drawer_layout);
@@ -85,7 +81,18 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+    }
 
+    public void onBind(View view){
+        Intent intent = new Intent (getBaseContext(), WeatherService.class);
+        bindService(intent, serviceConnection, BIND_AUTO_CREATE);
+    }
+
+    public void onUnbindService(View view){
+        if (serviceBind){
+            unbindService(serviceConnection);
+        }
+        serviceBind = false;
     }
 
     @Override
@@ -159,11 +166,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void init(){
-
-        weatherPreference = new WeatherPreference(this);
         preferencesFragment = PreferencesFragment.newInstance(null, null);
         addCityFragment = AddCityFragment.newInstance(null, null);
-        mainFragment = MainFragment.newInstance(null,null);
+        MainFragment mainFragment = MainFragment.newInstance(null, null);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, mainFragment);
         fragmentTransaction.commit();
@@ -177,6 +182,22 @@ public class MainActivity extends AppCompatActivity
         buttonSetting.setOnClickListener(this);
     }
 
+    private void initService(final String cityName){
+        serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                weatherService = ((WeatherService.WeatherBinder) iBinder).getService();
+                weatherService.setCityName(cityName);
+                serviceBind = true;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+                serviceBind = false;
+            }
+        };
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -185,81 +206,22 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListItemClick(int id) {
         String city = MainData.getInstance().getCities().get(id).getCityName();
-        System.out.println(city);
-        weatherPreference.setCity(city);
-        updateWeatherData(city);
+        if (!serviceBind) return;
+        updateCityWeather(city);
+        Intent intentUpdateWidgetCity = new Intent(WeatherWidget.ACTION_GET_WEATHER);
+        intentUpdateWidgetCity.putExtra("cityName", city);
+        sendBroadcast(intentUpdateWidgetCity);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    public void updateCityWeather(String city) {
+        weatherPreference.setCity(city);
+        weatherService.setCityName(city);
+        weatherService.getWeatherPrediction();
     }
 
     public WeatherPreference getWeatherPreference() {
         return weatherPreference;
-    }
-
-    public void updateWeatherData(final String city) {
-
-        new Thread(){
-            public void run(){
-                final JSONObject json = WeatherDataLoader.getJSONData(MainActivity.this, city);
-                if (json == null){
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(MainActivity.this, "City not found",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            renderWeather(json, city);
-                            daysAdapter.notifyDataSetChanged();
-                            weekAdapter.notifyDataSetChanged();
-                            mainFragment.setCityLabel(city);
-                        }
-                    });
-
-                }
-            }
-        }.start();
-    }
-
-    private void renderWeather(JSONObject json, String cityName){
-        Log.d(LOG_TAG, "json " + json.toString());
-        try {
-
-            JSONArray daysOfWeek = json.getJSONArray("list");
-            List<DayPrediction> week = MainData.getInstance().getWeekPrediction().getDaysList();
-            List<HourWeather> hours = MainData.getInstance().getDayPerdiction().getHours();
-            week.clear();
-            hours.clear();
-            for (int i = 0; i < HOURS_PERDICT_ELEMENTS; i++) {
-                JSONObject hour = daysOfWeek.getJSONObject(i);
-                JSONObject main = hour.getJSONObject("main");
-                JSONObject details = hour.getJSONArray("weather").getJSONObject(0);
-                System.out.println("Main: " + main.toString());
-                System.out.println("Details: " + details.toString());
-                hours.add(new HourWeather(hour.getLong("dt"), details.getInt("id"),
-                        main.getDouble("temp")));
-            }
-            for (int i = 0; i < daysOfWeek.length(); i ++) {
-                    JSONObject hour = daysOfWeek.getJSONObject(i);
-                    JSONObject main = hour.getJSONObject("main");
-                    JSONObject details = hour.getJSONArray("weather").getJSONObject(0);
-                    if (hour.getString("dt_txt").contains("21")) {
-                        if (week.size() >= 5) break;
-                        System.out.println(">>>> Add to list: " + week.size());
-                        week.add(new DayPrediction(details.getInt("id"), hour.getLong("dt"),
-                                main.getDouble("temp")));
-                    }
-            }
-
-            HourWeather hourWeather = hours.get(0);
-            MainData.getInstance().saveCityStat(cityName, hourWeather.getDt(),
-                    (int) hourWeather.getTemp(), hourWeather.getId(), json.toString() );
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     public DaysAdapter getDaysAdapter() {
@@ -277,5 +239,4 @@ public class MainActivity extends AppCompatActivity
     public boolean isMenuEditable() {
         return isMenuEditable;
     }
-
 }

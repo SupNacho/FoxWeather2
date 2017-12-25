@@ -1,9 +1,12 @@
 package fw.supernacho.ru.foxweather;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,14 +17,12 @@ import android.widget.TextView;
 import fw.supernacho.ru.foxweather.recyclers.DaysAdapter;
 import fw.supernacho.ru.foxweather.recyclers.WeekAdapter;
 
-public class MainFragment extends Fragment{
+public class MainFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
 
     private WeatherInfoListener mainActivity;
     private DaysAdapter daysAdapter;
@@ -31,13 +32,6 @@ public class MainFragment extends Fragment{
     interface WeatherInfoListener {
         void onListItemClick(int id);
     }
-
-    WeatherInfoListener weatherInfo;
-
-    void registerAdapted(WeatherInfoListener weatherInfo){
-        this.weatherInfo = weatherInfo;
-    }
-
 
     public MainFragment() {
     }
@@ -69,11 +63,6 @@ public class MainFragment extends Fragment{
         return view;
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -84,14 +73,9 @@ public class MainFragment extends Fragment{
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
-    }
-
-    private void init(View view){
+    private void init(View view) {
         textViewCityName = view.findViewById(R.id.text_view_city_name);
         daysAdapter = ((MainActivity) mainActivity).getDaysAdapter();
         weekAdapter = ((MainActivity) mainActivity).getWeekAdapter();
@@ -105,9 +89,22 @@ public class MainFragment extends Fragment{
         hoursRecycler.setAdapter(daysAdapter);
         weekRecycler.setLayoutManager(weekLayoutManager);
         weekRecycler.setAdapter(weekAdapter);
+        ((MainActivity) mainActivity).onBind(view);
+        BroadcastReceiver serviceReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                textViewCityName.setText(intent.getStringExtra("cityName"));
+                daysAdapter.notifyDataSetChanged();
+                weekAdapter.notifyDataSetChanged();
+            }
+        };
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(serviceReceiver,
+                new IntentFilter("fw.supernacho.ru.foxweather.action.DATA_READY"));
     }
 
-    public void setCityLabel(String cityName){
-        textViewCityName.setText(cityName);
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((MainActivity) mainActivity).onUnbindService(getView());
     }
 }

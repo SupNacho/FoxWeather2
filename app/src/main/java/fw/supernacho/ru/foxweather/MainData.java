@@ -83,4 +83,8 @@ public class MainData {
     public void setMainActivity(MainActivity main){
         this.main = main;
     }
+
+    public MainActivity getMain() {
+        return main;
+    }
 }

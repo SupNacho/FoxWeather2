@@ -40,9 +40,6 @@ public class CityDataSource {
         long cityCount = checkCityInBase(DataBaseHelper.TABLE_CITIES, cityName);
         if (cityCount == 0) {
             long insertId = dataBase.insert(DataBaseHelper.TABLE_CITIES, null, values);
-//            City newCity = new City();
-//            newCity.setCityName(cityName);
-//            newCity.setId(insertId);
             return true;
         }
         return false;

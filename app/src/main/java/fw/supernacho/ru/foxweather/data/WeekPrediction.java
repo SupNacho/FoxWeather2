@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public class WeekPrediction {
-    List<DayPrediction> daysList;
+    private List<DayPrediction> daysList;
 
     public WeekPrediction() {
         daysList = new ArrayList<>();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="open_weather_maps_app_id">cfdb77e65d320ca11996d5fee7f947bd</string>
     <string name="tomorrow_prediction">Tomorrow prediction</string>
     <string name="save_settings">save settings</string>
     <string name="add_new_city">Add new city for watching:</string>
