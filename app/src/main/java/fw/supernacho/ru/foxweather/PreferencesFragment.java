@@ -79,12 +79,6 @@ public class PreferencesFragment extends Fragment {
     public void onAttach(Context context) {
         mainActivity = context;
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override

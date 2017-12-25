@@ -53,8 +53,6 @@ public class WidgetService extends IntentService {
     private void handleWeather(final String city) {
         new Thread(){
             public void run(){
-                Log.d(">>>>>", "json getter");
-                Log.d(">>>>>", "Context -> " + getBaseContext());
                 final JSONObject json = WeatherDataLoader.getJSONData( getBaseContext(), city);
                 if (json == null){
                     handler.post(new Runnable() {

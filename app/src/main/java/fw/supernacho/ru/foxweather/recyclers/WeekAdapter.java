@@ -13,7 +13,7 @@ import fw.supernacho.ru.foxweather.R;
  */
 
 public class WeekAdapter extends RecyclerView.Adapter<WeekViewHolder>{
-    Context context;
+    private Context context;
     public WeekAdapter(Context context){
         this.context = context;
     }
@@ -30,7 +30,6 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekViewHolder>{
 
     @Override
     public int getItemCount() {
-        System.out.println(">>>> Days in list: " + MainData.getInstance().getWeekPrediction().getDaysList().size());
         return MainData.getInstance().getWeekPrediction().getDaysList().size();
     }
 }
