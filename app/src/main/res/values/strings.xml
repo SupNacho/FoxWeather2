@@ -74,4 +74,6 @@
         <item>- 25 C</item>
         <item>+ 10 C</item>
     </string-array>
+    <string name="appwidget_text">FoxWeather Widget</string>
+    <string name="add_widget">Add widget</string>
 </resources>

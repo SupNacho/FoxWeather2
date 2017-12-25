@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:padding="@dimen/widget_margin"
+              android:orientation="horizontal">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/widged_content_padding"
+    android:layout_weight="8">
+    <TextView
+        android:id="@+id/appwidget_city_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_day_item_18sp"
+        tools:text="CityName"/>
+    <TextView
+        android:id="@+id/appwidget_temp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/header_size_26"
+        tools:text="temp: +5 C"/>
+</LinearLayout>
+    <ImageView
+        android:id="@+id/appwidget_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textStyle="bold|italic"
+        android:layout_weight="2"
+        tools:src="@drawable/weather_icon_rain500"/>
+
+</LinearLayout>

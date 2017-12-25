@@ -83,7 +83,7 @@ public class AddCityFragment extends Fragment implements View.OnClickListener {
                     if(MainData.getInstance().addCity(cityName)) {
                         editTextNewCity.clearFocus();
                         editTextNewCity.setText(null);
-                        ((MainActivity) mainActivity).updateWeatherData(cityName);
+                        ((MainActivity) mainActivity).updateCityWeather(cityName);
                         InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                         if (inputManager != null) {
                             inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
