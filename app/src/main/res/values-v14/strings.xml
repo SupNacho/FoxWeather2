@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_view_city_label">Enter city for displayin widget:</string>
+    <string name="button_apply_settings_text">APPLY SETTINGS</string>
+</resources>

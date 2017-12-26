@@ -43,6 +43,9 @@
             android:name=".services.WidgetService"
             android:exported="false">
         </service>
+
+        <activity android:name=".widget.WidgetConfigActivity">
+        </activity>
     </application>
 
 </manifest>

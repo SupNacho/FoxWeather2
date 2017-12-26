@@ -13,13 +13,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import fw.supernacho.ru.foxweather.data.WeatherDataLoader;
+import fw.supernacho.ru.foxweather.widget.WeatherWidget;
 
 
 public class WidgetService extends IntentService {
 
     private static final String ACTION_GET_WEATHER = "fw.supernacho.ru.foxweather.services.action.GET_WEATHER";
     private static final String UPDATE_WIDGET_ACTION = "android.appwidget.action.APPWIDGET_UPDATE";
-
     private static final String CITY_NAME = "fw.supernacho.ru.foxweather.services.extra.CITY_NAME";
     private final Handler handler = new Handler();
 
@@ -27,9 +27,10 @@ public class WidgetService extends IntentService {
         super("WidgetService");
     }
 
-    public static void startActionGetWeather(Context context, String cityName) {
+    public static void startActionGetWeather(Context context, String cityName, int id) {
         Intent intent = new Intent(context, WidgetService.class);
-        intent.setAction(ACTION_GET_WEATHER);
+        intent.setAction(UPDATE_WIDGET_ACTION);
+        intent.putExtra(WeatherWidget.WIDGET_ID, id);
         intent.putExtra(CITY_NAME, cityName);
         context.startService(intent);
     }
@@ -39,9 +40,10 @@ public class WidgetService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (ACTION_GET_WEATHER.equals(action)) {
-                final String param1 = intent.getStringExtra(CITY_NAME);
-                handleWeather(param1);
+            if (UPDATE_WIDGET_ACTION.equals(action)) {
+                final String cityName = intent.getStringExtra(CITY_NAME);
+                final int widgetId = intent.getIntExtra(WeatherWidget.WIDGET_ID, 0);
+                handleWeather(cityName, widgetId);
             }
         }
     }
@@ -50,7 +52,7 @@ public class WidgetService extends IntentService {
      * Handle action Foo in the provided background thread with the provided
      * parameters.
      */
-    private void handleWeather(final String city) {
+    private void handleWeather(final String city, final int id) {
         new Thread(){
             public void run(){
                 final JSONObject json = WeatherDataLoader.getJSONData( getBaseContext(), city);
@@ -66,7 +68,7 @@ public class WidgetService extends IntentService {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            renderWeather(json, city);
+                            renderWeather(json, city, id);
                         }
                     });
                 }
@@ -74,7 +76,7 @@ public class WidgetService extends IntentService {
         }.start();
     }
 
-    private void renderWeather(JSONObject json, String cityName){
+    private void renderWeather(JSONObject json, String cityName, int id){
         try {
 
             JSONArray daysOfWeek = json.getJSONArray("list");
@@ -88,6 +90,7 @@ public class WidgetService extends IntentService {
             weatherDataBroadcast.putExtra("icon", iconId);
             weatherDataBroadcast.putExtra("temp", temp);
             weatherDataBroadcast.putExtra("cityName", cityName);
+            weatherDataBroadcast.putExtra("id", id);
             sendBroadcast(weatherDataBroadcast);
         } catch (JSONException e) {
             e.printStackTrace();
