@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">FoxWeather</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="empty_input_city_name">City name is empty!</string>
@@ -18,65 +17,9 @@
     <string name="button_text_settings">settings</string>
     <string name="context_menu_remove_city">Remove</string>
     <string name="icon_remove_city">icon_remove_city</string>
-
-    <string-array name="cities">
-        <item>Moscow</item>
-        <item>Saint Petersburg</item>
-        <item>Krasnodar</item>
-        <item>Yakutsk</item>
-        <item>London</item>
-        <item>Moscow</item>
-        <item>Saint Petersburg</item>
-        <item>Krasnodar</item>
-        <item>Yakutsk</item>
-        <item>London</item>
-        <item>Moscow</item>
-        <item>Saint Petersburg</item>
-        <item>Krasnodar</item>
-        <item>Yakutsk</item>
-        <item>London</item>
-        <item>Moscow</item>
-        <item>Saint Petersburg</item>
-        <item>Krasnodar</item>
-        <item>Yakutsk</item>
-        <item>London</item>
-        <item>Moscow</item>
-        <item>Saint Petersburg</item>
-        <item>Krasnodar</item>
-        <item>Yakutsk</item>
-        <item>London</item>
-        <item>Moscow</item>
-        <item>Saint Petersburg</item>
-        <item>Krasnodar</item>
-        <item>Yakutsk</item>
-        <item>London</item>
-        <item>Moscow</item>
-        <item>Saint Petersburg</item>
-        <item>Krasnodar</item>
-        <item>Yakutsk</item>
-        <item>London</item>
-        <item>Moscow</item>
-        <item>Saint Petersburg</item>
-        <item>Krasnodar</item>
-        <item>Yakutsk</item>
-        <item>London</item>
-        <item>Moscow</item>
-        <item>Saint Petersburg</item>
-        <item>Krasnodar</item>
-        <item>Yakutsk</item>
-        <item>London</item>
-    </string-array>
-
-    <string-array name="cities_temps">
-        <item>+ 5 C</item>
-        <item>+ 2 C</item>
-        <item>+ 25 C</item>
-        <item>- 25 C</item>
-        <item>+ 10 C</item>
-    </string-array>
     <string name="appwidget_text">FoxWeather Widget</string>
     <string name="add_widget">Add widget</string>
-    <string name="text_view_city_label">Enter city for displayin widget:</string>
+    <string name="text_view_city_label">Enter city for display in widget:</string>
     <string name="button_apply_settings_text">APPLY SETTINGS</string>
     <string name="button_apply_setting_text">APPLY SETTING</string>
 </resources>
