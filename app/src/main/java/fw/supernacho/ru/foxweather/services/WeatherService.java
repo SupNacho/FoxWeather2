@@ -8,6 +8,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +23,7 @@ import fw.supernacho.ru.foxweather.MainData;
 import fw.supernacho.ru.foxweather.data.DayPrediction;
 import fw.supernacho.ru.foxweather.data.HourWeather;
 import fw.supernacho.ru.foxweather.data.WeatherDataLoader;
+import fw.supernacho.ru.foxweather.data.weather.WeatherData;
 
 public class WeatherService extends Service {
     public static final String DATA_READY = "fw.supernacho.ru.foxweather.action.DATA_READY";
@@ -87,38 +90,56 @@ public class WeatherService extends Service {
         timer.schedule(timerTask, 0, interval);
     }
 
+//    private void renderWeather(JSONObject json, String cityName){
+//        try {
+//
+//            JSONArray daysOfWeek = json.getJSONArray("list");
+//            List<DayPrediction> week = MainData.getInstance().getWeekPrediction().getDaysList();
+//            List<HourWeather> hours = MainData.getInstance().getDayPerdiction().getHours();
+//            week.clear();
+//            hours.clear();
+//            for (int i = 0; i < HOURS_PERDICT_ELEMENTS; i++) {
+//                JSONObject hour = daysOfWeek.getJSONObject(i);
+//                JSONObject main = hour.getJSONObject("main");
+//                JSONObject details = hour.getJSONArray("weather").getJSONObject(0);
+//                hours.add(new HourWeather(hour.getLong("dt"), details.getInt("id"),
+//                        main.getDouble("temp")));
+//            }
+//            for (int i = 0; i < daysOfWeek.length(); i ++) {
+//                JSONObject hour = daysOfWeek.getJSONObject(i);
+//                JSONObject main = hour.getJSONObject("main");
+//                JSONObject details = hour.getJSONArray("weather").getJSONObject(0);
+//                if (hour.getString("dt_txt").contains("21")) {
+//                    if (week.size() >= 5) break;
+//                    week.add(new DayPrediction(details.getInt("id"), hour.getLong("dt"),
+//                            main.getDouble("temp")));
+//                }
+//            }
+//
+//            HourWeather hourWeather = hours.get(0);
+//            MainData.getInstance().saveCityStat(cityName, hourWeather.getDt(),
+//                    (int) hourWeather.getTemp(), hourWeather.getId(), json.toString() );
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        Intent intent = new Intent(DATA_READY);
+//        intent.putExtra("cityName", cityName);
+//        LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
+////    }
     private void renderWeather(JSONObject json, String cityName){
-        try {
-
-            JSONArray daysOfWeek = json.getJSONArray("list");
-            List<DayPrediction> week = MainData.getInstance().getWeekPrediction().getDaysList();
-            List<HourWeather> hours = MainData.getInstance().getDayPerdiction().getHours();
-            week.clear();
-            hours.clear();
-            for (int i = 0; i < HOURS_PERDICT_ELEMENTS; i++) {
-                JSONObject hour = daysOfWeek.getJSONObject(i);
-                JSONObject main = hour.getJSONObject("main");
-                JSONObject details = hour.getJSONArray("weather").getJSONObject(0);
-                hours.add(new HourWeather(hour.getLong("dt"), details.getInt("id"),
-                        main.getDouble("temp")));
-            }
-            for (int i = 0; i < daysOfWeek.length(); i ++) {
-                JSONObject hour = daysOfWeek.getJSONObject(i);
-                JSONObject main = hour.getJSONObject("main");
-                JSONObject details = hour.getJSONArray("weather").getJSONObject(0);
-                if (hour.getString("dt_txt").contains("21")) {
-                    if (week.size() >= 5) break;
-                    week.add(new DayPrediction(details.getInt("id"), hour.getLong("dt"),
-                            main.getDouble("temp")));
-                }
-            }
-
-            HourWeather hourWeather = hours.get(0);
-            MainData.getInstance().saveCityStat(cityName, hourWeather.getDt(),
-                    (int) hourWeather.getTemp(), hourWeather.getId(), json.toString() );
-        } catch (JSONException e) {
-            e.printStackTrace();
+        Gson gson = new Gson();
+        List<HourWeather> hours = MainData.getInstance().getDayPerdiction().getHours();
+        hours.clear();
+        WeatherData weatherData = gson.fromJson(json.toString(), WeatherData.class);
+        Log.d("+++", weatherData.getCity().getName());
+        Log.d("+++", String.valueOf(weatherData.getList().size()));
+        Log.d("+++", String.valueOf(weatherData.getList().get(0).getWeather().get(0).getIcon()));
+        for (int i = 0; i < HOURS_PERDICT_ELEMENTS; i++) {
+            hours.add(new HourWeather((long) weatherData.getList().get(i).getDt(),
+                    weatherData.getList().get(i).getWeather().get(0).getId(),
+                    weatherData.getList().get(i).getMain().getTemp()));
         }
+
         Intent intent = new Intent(DATA_READY);
         intent.putExtra("cityName", cityName);
         LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);

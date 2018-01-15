@@ -30,7 +30,7 @@ public class WeatherDataLoader {
             URL url = new URL(String.format(OPEN_WEATHER_API, city));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.addRequestProperty(KEY, context.getString(R.string.open_weather_maps_app_id));
-
+            
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder rawData = new StringBuilder(8196);
             String tempVariable;
