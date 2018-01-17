@@ -129,19 +129,51 @@ public class WeatherService extends Service {
     private void renderWeather(JSONObject json, String cityName){
         Gson gson = new Gson();
         List<HourWeather> hours = MainData.getInstance().getDayPerdiction().getHours();
+        List<DayPrediction> week = MainData.getInstance().getWeekPrediction().getDaysList();
         hours.clear();
+        week.clear();
         WeatherData weatherData = gson.fromJson(json.toString(), WeatherData.class);
         Log.d("+++", weatherData.getCity().getName());
         Log.d("+++", String.valueOf(weatherData.getList().size()));
         Log.d("+++", String.valueOf(weatherData.getList().get(0).getWeather().get(0).getIcon()));
-        for (int i = 0; i < HOURS_PERDICT_ELEMENTS; i++) {
-            hours.add(new HourWeather((long) weatherData.getList().get(i).getDt(),
-                    weatherData.getList().get(i).getWeather().get(0).getId(),
-                    weatherData.getList().get(i).getMain().getTemp()));
-        }
+        String currentDay = "";
+        float avgTemp = 0.0f;
+        float tTemp = 0.0f;
+        int count = 0;
+        for (int i = 0; i < weatherData.getList().size(); i++) {
+            if (currentDay.equals("")) currentDay = weatherData.getList().get(i).getDtTxt().substring(0,10);
+            if (!currentDay.equals(weatherData.getList().get(i).getDtTxt().substring(0,10))){
+                currentDay = weatherData.getList().get(i).getDtTxt().substring(0,10);
+                avgTemp = tTemp / count;
+                week.add(new DayPrediction(weatherData.getList().get(i-1).getWeather().get(0).getId(),
+                        weatherData.getList().get(i-1).getDt(), avgTemp));
 
+                Log.d("+++-", weatherData.getList().get(i).getDtTxt().substring(0,10));
+                Log.d("+++-", String.valueOf(tTemp));
+                Log.d("+++-", String.valueOf(count));
+                Log.d("+++-", String.valueOf(avgTemp));
+                count = 0;
+                avgTemp = 0.0f;
+                tTemp = 0.0f;
+                count += 1;
+                tTemp += weatherData.getList().get(i).getMain().getTemp();
+            } else {
+                tTemp += weatherData.getList().get(i).getMain().getTemp();
+                count += 1;
+                Log.d("+++", weatherData.getList().get(i).getDtTxt().substring(0,10));
+                Log.d("+++", String.valueOf(tTemp));
+                Log.d("+++", String.valueOf(count));
+                Log.d("+++", String.valueOf(avgTemp));
+            }
+            if (i > 0 && i < 8) {
+                hours.add(new HourWeather((long) weatherData.getList().get(i).getDt(),
+                        weatherData.getList().get(i).getWeather().get(0).getId(),
+                        weatherData.getList().get(i).getMain().getTemp()));
+            }
+        }
+        String cityNameWithCountry = weatherData.getCity().getName() + ", " + weatherData.getCity().getCountry();
         Intent intent = new Intent(DATA_READY);
-        intent.putExtra("cityName", cityName);
+        intent.putExtra("cityName", cityNameWithCountry);
         LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
     }
 

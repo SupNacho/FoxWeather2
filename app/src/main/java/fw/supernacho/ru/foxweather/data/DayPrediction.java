@@ -39,4 +39,7 @@ public class DayPrediction {
     public double getDayTemp() {
         return dayTemp;
     }
+    public String getStringDayTemp() {
+        return String.format("%.1f", dayTemp);
+    }
 }

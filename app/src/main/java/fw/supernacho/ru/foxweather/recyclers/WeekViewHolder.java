@@ -47,7 +47,7 @@ public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         DayPrediction day = daysList.get(position);
         textViewDayDate.setText(timeStamp.format(day.getDayDt() * 1000));
         setIcon(day.getDayIcoId());
-        textViewDayTemp.setText(String.valueOf(day.getDayTemp()));
+        textViewDayTemp.setText(String.valueOf(day.getStringDayTemp()));
     }
 
     private void setIcon(int iconId){

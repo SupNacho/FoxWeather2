@@ -46,7 +46,7 @@ public class DaysViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         HourWeather hour = hours.get(position);
         setIcon(hour.getId());
         textViewTime.setText(dateStamp.format(hour.getDt() * 1000));
-        textViewTemp.setText(String.valueOf(hour.getTemp()));
+        textViewTemp.setText(String.valueOf(hour.getStringTemp()));
     }
 
     private void setIcon(int iconId){
