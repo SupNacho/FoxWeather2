@@ -2,4 +2,10 @@
 <resources>
     <string name="text_view_city_label">Enter city for displayin widget:</string>
     <string name="button_apply_settings_text">APPLY SETTINGS</string>
+    <string-array name="countries">
+        <item>Russia</item>
+        <item>USA</item>
+        <item>Ukraine</item>
+        <item>Great Britan</item>
+    </string-array>
 </resources>
