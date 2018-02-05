@@ -29,6 +29,6 @@
         android:layout_margin="@dimen/margin_standart_LR"
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/button_text"
-        android:text="Add city"/>
+        android:text="@string/add_city_button"/>
 
 </LinearLayout>

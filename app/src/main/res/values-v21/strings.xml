@@ -9,6 +9,7 @@
     <string name="icon_remove_city">icon_remove_city</string>
     <string name="text_view_city_label">Enter city for displayin widget:</string>
     <string name="button_apply_settings_text">APPLY SETTINGS</string>
+    <string name="add_city_button">Add city</string>
     <string-array name="countries">
         <item>Russia</item>
         <item>USA</item>
