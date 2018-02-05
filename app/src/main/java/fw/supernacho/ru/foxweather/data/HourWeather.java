@@ -26,4 +26,7 @@ public class HourWeather {
     public double getTemp() {
         return temp;
     }
+    public String getStringTemp() {
+        return String.format("%.1f", temp);
+    }
 }

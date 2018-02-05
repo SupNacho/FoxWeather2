@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.Spinner;
 
 
 public class AddCityFragment extends Fragment implements View.OnClickListener {
@@ -23,6 +23,7 @@ public class AddCityFragment extends Fragment implements View.OnClickListener {
     private String mParam2;
     private Context mainActivity;
     private EditText editTextNewCity;
+    private Spinner spinnerCountry;
 
     private OnFragmentInteractionListener mListener;
 
@@ -104,6 +105,7 @@ public class AddCityFragment extends Fragment implements View.OnClickListener {
 
     private void init(View view){
         editTextNewCity = view.findViewById(R.id.edit_text_add_city);
+        spinnerCountry = view.findViewById(R.id.spinner_country);
         Button buttonAddCity = view.findViewById(R.id.button_add_city);
         buttonAddCity.setOnClickListener(this);
         editTextNewCity.requestFocus();
