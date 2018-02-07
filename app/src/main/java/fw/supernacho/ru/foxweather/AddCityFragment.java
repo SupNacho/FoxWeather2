@@ -10,20 +10,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+
+import java.util.List;
+
+import fw.supernacho.ru.foxweather.data.weather.Country;
+import fw.supernacho.ru.foxweather.prefs.WeatherPreference;
 
 
-public class AddCityFragment extends Fragment implements View.OnClickListener {
+public class AddCityFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String DEFAULT_COUNTRY_TAG = "RU";
 
     private String mParam1;
     private String mParam2;
     private Context mainActivity;
     private EditText editTextNewCity;
     private Spinner spinnerCountry;
+    private String countryTag;
+    private WeatherPreference weatherPrefs;
 
     private OnFragmentInteractionListener mListener;
 
@@ -81,10 +92,11 @@ public class AddCityFragment extends Fragment implements View.OnClickListener {
             case R.id.button_add_city:
                 String cityName = editTextNewCity.getText().toString();
                 if (!cityName.isEmpty()) {
-                    if(MainData.getInstance().addCity(cityName)) {
+                    String cityAndCountry = cityName + "," + countryTag;
+                    if(MainData.getInstance().addCity(cityAndCountry)) {
                         editTextNewCity.clearFocus();
                         editTextNewCity.setText(null);
-                        ((MainActivity) mainActivity).updateCityWeather(cityName);
+                        ((MainActivity) mainActivity).updateCityWeather(cityAndCountry);
                         InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                         if (inputManager != null) {
                             inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -99,15 +111,34 @@ public class AddCityFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        countryTag = ((Country)adapterView.getItemAtPosition(i)).getTag();
+        WeatherPreference weatherPrefs = MainData.getInstance().getMain().getWeatherPreference();
+        weatherPrefs.setCountry(i);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        countryTag = DEFAULT_COUNTRY_TAG;
+    }
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
 
     private void init(View view){
+        weatherPrefs = MainData.getInstance().getMain().getWeatherPreference();
         editTextNewCity = view.findViewById(R.id.edit_text_add_city);
         spinnerCountry = view.findViewById(R.id.spinner_country);
+        List<Country> countries = MainData.getInstance().getCountries();
+        SpinnerAdapter countiesAdapter = new ArrayAdapter<>(mainActivity, android.R.layout.simple_list_item_1,
+                countries);
+        spinnerCountry.setAdapter(countiesAdapter);
         Button buttonAddCity = view.findViewById(R.id.button_add_city);
         buttonAddCity.setOnClickListener(this);
+        spinnerCountry.setOnItemSelectedListener(this);
+        spinnerCountry.setSelection(weatherPrefs.getCountry(), true);
         editTextNewCity.requestFocus();
     }
 }
