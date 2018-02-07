@@ -9,6 +9,7 @@ import fw.supernacho.ru.foxweather.data.City;
 import fw.supernacho.ru.foxweather.data.CityDataSource;
 import fw.supernacho.ru.foxweather.data.DayPrediction;
 import fw.supernacho.ru.foxweather.data.WeekPrediction;
+import fw.supernacho.ru.foxweather.data.weather.Country;
 
 /**
  * Created by SuperNacho on 08.12.2017.
@@ -44,6 +45,10 @@ public class MainData {
 
     public List<City> getCities(){
         return cityDataSource.getAllCities();
+    }
+
+    public List<Country> getCountries(){
+        return cityDataSource.getCountries();
     }
 
     public void removeCity(City removedCity){

@@ -22,6 +22,7 @@
     <string name="text_view_city_label">Enter city for display in widget:</string>
     <string name="button_apply_settings_text">APPLY SETTINGS</string>
     <string name="button_apply_setting_text">APPLY SETTING</string>
+    <string name="add_city_button">Add city</string>
     <string-array name="countries">
         <item>Russia</item>
         <item>USA</item>

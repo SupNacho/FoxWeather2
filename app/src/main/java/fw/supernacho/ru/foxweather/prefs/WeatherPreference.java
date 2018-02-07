@@ -16,6 +16,7 @@ import java.util.TreeSet;
 
 public class WeatherPreference {
     private static final String APP_PREFFERENCES_CITY = "city";
+    private static final String APP_PREFFERENCES_COUNTRY = "country";
     private static final String APP_PREFFERENCES_CITIES = "cities";
     private static final String APP_PREFFERENCES_ISPRESSURE = "checked_pressure";
     private static final String APP_PREFFERENCES_ISTOMORROW = "checked_tomorrow";
@@ -31,10 +32,15 @@ public class WeatherPreference {
         return userPreferences.getString(APP_PREFFERENCES_CITY, MOSCOW);
     }
 
+    public int getCountry() {
+        return userPreferences.getInt(APP_PREFFERENCES_COUNTRY, 181);
+    }
+
     public Set<String> getCities(){
         Set<String> citySet = new TreeSet<>();
         return userPreferences.getStringSet(APP_PREFFERENCES_CITIES, citySet);
     }
+
 
     public boolean[] getSelectors(){
         return new boolean[] {
@@ -43,14 +49,17 @@ public class WeatherPreference {
                 userPreferences.getBoolean(APP_PREFFERENCES_ISWEEK, false)
         };
     }
+
     public void setCity(String city){
         userPreferences.edit().putString(APP_PREFFERENCES_CITY, city).apply();
     }
+
+    public void setCountry(int id){
+        userPreferences.edit().putInt(APP_PREFFERENCES_COUNTRY, id).apply();
+    }
     public void setCities(List<String> cityList){
         Set<String> citySet = new TreeSet<>();
-        for (String s : cityList) {
-            citySet.add(s);
-        }
+        citySet.addAll(cityList);
             userPreferences.edit().putStringSet(APP_PREFFERENCES_CITIES, citySet).apply();
     }
     public void setPressure(boolean pressure){
