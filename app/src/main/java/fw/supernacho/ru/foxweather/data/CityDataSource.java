@@ -4,10 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fw.supernacho.ru.foxweather.CsvParser;
+import fw.supernacho.ru.foxweather.R;
+import fw.supernacho.ru.foxweather.data.weather.Country;
 
 /**
  * Created by SuperNacho on 14.12.2017.
@@ -16,6 +20,7 @@ import java.util.List;
 public class CityDataSource {
     private DataBaseHelper dbHelper;
     private SQLiteDatabase dataBase;
+    private Context context;
 
     private String[] citiesAllNames = {
             DataBaseHelper.COLUMN_ID,
@@ -24,10 +29,16 @@ public class CityDataSource {
 
     public CityDataSource(Context context){
         dbHelper = new DataBaseHelper(context);
+        this.context = context;
     }
 
     public void open(){
         dataBase = dbHelper.getWritableDatabase();
+        if (checkTable(DataBaseHelper.TABLE_COUNTRIES)){
+            if (!checkRecords(DataBaseHelper.TABLE_COUNTRIES)) {
+                new CsvParser(dbHelper, dataBase, context).parseCSV(R.raw.country_codes);
+            }
+        }
     }
 
     public void close(){
@@ -67,9 +78,38 @@ public class CityDataSource {
         System.out.println(">>> Kol-vo gorodov v state s takim imenem: " + cursor.getCount());
         if (cursor.getCount() > 0) {
             System.out.println(">>> City ID: " + cursor.getLong(0));
-            return cursor.getLong(0);
+            long id = cursor.getLong(0);
+            cursor.close();
+            return id;
         }
         return 0L;
+    }
+
+    private boolean checkTable(String table){
+        Cursor cursor = dataBase.rawQuery("select DISTINCT tbl_name FROM sqlite_master where tbl_name = '" + table + "';",
+                null);
+        if (cursor != null){
+            if(cursor.getCount() > 0){
+                cursor.close();
+                return true;
+            }
+            cursor.close();
+
+        }
+        return false;
+    }
+    private boolean checkRecords(String table){
+        Cursor cursor = dataBase.query(table, null, null, null, null, null, null);
+        if (cursor != null){
+            if(cursor.getCount() > 0){
+                Log.d("////", String.valueOf(cursor.getCount()));
+                cursor.close();
+                return true;
+            }
+            cursor.close();
+
+        }
+        return false;
     }
 
     public void deleteCity(City city){
@@ -96,10 +136,32 @@ public class CityDataSource {
         return cities;
     }
 
+    public List<Country> getCountries(){
+        List<Country> countries = new ArrayList<>();
+        Cursor cursor = dataBase.query(DataBaseHelper.TABLE_COUNTRIES, new String[] {DataBaseHelper.COLUMN_ID_COUNTRIES,
+                        DataBaseHelper.COLUMN_TITLE, DataBaseHelper.COLUMN_TAG},null,
+                null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Country country = cursorToCountry(cursor);
+            countries.add(country);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return countries;
+    }
+
     private City cursorToCity(Cursor cursor){
         City city = new City();
         city.setId(cursor.getLong(0));
         city.setCityName(cursor.getString(1));
         return city;
+    }
+    private Country cursorToCountry(Cursor cursor){
+        Country country = new Country();
+        country.setId(cursor.getLong(0));
+        country.setCountryTitle(cursor.getString(1));
+        country.setTag(cursor.getString(2));
+        return country;
     }
 }
