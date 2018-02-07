@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "fox_weather.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
     static final String TABLE_CITIES = "cities";
     static final String COLUMN_ID = "_id";
     static final String COLUMN_CITY = "city";
@@ -49,8 +49,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITIES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_WEATHER_LOGS);
-        onCreate(db);
+        if (oldVersion < newVersion) {
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITIES);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_WEATHER_LOGS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_COUNTRIES);
+            onCreate(db);
+        }
     }
 }
