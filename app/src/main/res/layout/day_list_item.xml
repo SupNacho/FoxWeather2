@@ -1,34 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_margin="@dimen/day_item_margin_3dp">
-    <TextView
-        android:id="@+id/text_view_day_date"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/day_item_margin_3dp"
-        android:padding="@dimen/days_text_padd_20dp"
-        android:textSize="@dimen/text_view_days_date_16sp"
-        android:text="Su, 10 december"
-        android:layout_weight="8"/>
-    <ImageView
-        android:id="@+id/image_view_day_icon"
-        android:src="@drawable/weather_icon_rain500"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_view_day_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/day_item_margin_3dp"
+            android:layout_weight="8"
+            android:padding="@dimen/days_text_padd_20dp"
+            android:text="Su, 10 december"
+            android:textSize="@dimen/text_view_days_date_16sp"/>
+
+        <ImageView
+            android:id="@+id/image_view_day_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/day_item_margin_3dp"
+            android:layout_weight="2"
+            android:src="@drawable/weather_icon_rain500"
+            android:textSize="@dimen/text_size_day_item_18sp"/>
+
+        <TextView
+            android:id="@+id/text_view_day_temp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/day_item_margin_3dp"
+            android:layout_weight="2"
+            android:text="+5 c"
+            android:textSize="@dimen/text_size_day_item_18sp"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_more_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/day_item_margin_3dp"
-        android:textSize="@dimen/text_size_day_item_18sp"
-        android:layout_weight="2"/>
-    <TextView
-        android:id="@+id/text_view_day_temp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/day_item_margin_3dp"
-        android:textSize="@dimen/text_size_day_item_18sp"
-        android:text="+5 c"
-        android:layout_weight="2"/>
+        android:paddingLeft="@dimen/days_text_padd_20dp"
+        android:visibility="visible"
+        android:paddingStart="@dimen/days_text_padd_20dp">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_more_info_pressure_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_standart_LR"
+                    android:text="@string/more_details_pressure_label"
+                    tools:text="Pressure:"
+                    android:layout_marginEnd="@dimen/margin_standart_LR"/>
+                <TextView
+                    android:id="@+id/text_view_more_info_pressure_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_small_5dp"
+                    tools:text="955.6"
+                    android:layout_marginEnd="@dimen/margin_small_5dp"/>
+                <TextView
+                    android:id="@+id/text_view_more_info_pressure_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_standart_LR"
+                    android:text="@string/more_datail_pressure_unit"
+                    tools:text="hPa"
+                    android:layout_marginEnd="@dimen/margin_standart_LR"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_more_info_humidity_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_standart_LR"
+                    android:text="@string/more_details_humidity_label"
+                    tools:text="Humidity:"
+                    android:layout_marginEnd="@dimen/margin_standart_LR"/>
+                <TextView
+                    android:id="@+id/text_view_more_info_humidity_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_small_5dp"
+                    tools:text="60"
+                    android:layout_marginEnd="@dimen/margin_small_5dp"/>
+                <TextView
+                    android:id="@+id/text_view_more_info_humidity_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_standart_LR"
+                    android:text="@string/more_details_humidity_unit"
+                    tools:text="%"
+                    android:layout_marginEnd="@dimen/margin_standart_LR"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>
