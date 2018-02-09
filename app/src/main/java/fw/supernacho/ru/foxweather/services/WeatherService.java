@@ -139,36 +139,52 @@ public class WeatherService extends Service {
         String currentDay = "";
         float avgTemp = 0.0f;
         float tTemp = 0.0f;
+        int avgHumidity = 0;
+        int tHumidity = 0;
+        double avgPressure = 0.0;
+        double tPressure = 0.0;
         int count = 0;
-        for (int i = 0; i < weatherData.getList().size(); i++) {
-            if (currentDay.equals("")) currentDay = weatherData.getList().get(i).getDtTxt().substring(0,10);
-            if (!currentDay.equals(weatherData.getList().get(i).getDtTxt().substring(0,10))){
-                currentDay = weatherData.getList().get(i).getDtTxt().substring(0,10);
+        List<fw.supernacho.ru.foxweather.data.weather.List> weatherList = weatherData.getList();
+        for (int i = 0; i < weatherList.size(); i++) {
+            if (currentDay.equals("")) currentDay = weatherList.get(i).getDtTxt().substring(0,10);
+            if (!currentDay.equals(weatherList.get(i).getDtTxt().substring(0,10))){
+                currentDay = weatherList.get(i).getDtTxt().substring(0,10);
                 avgTemp = tTemp / count;
-                week.add(new DayPrediction(weatherData.getList().get(i-1).getWeather().get(0).getId(),
-                        weatherData.getList().get(i-1).getDt(), avgTemp));
+                avgHumidity = tHumidity / count;
+                avgPressure = tPressure / count;
+                week.add(new DayPrediction(weatherList.get(i-1).getWeather().get(0).getId(),
+                        weatherList.get(i-1).getDt(), avgTemp, null, avgHumidity, avgPressure));
 
-                Log.d("+++-", weatherData.getList().get(i).getDtTxt().substring(0,10));
+                Log.d("+++-", weatherList.get(i).getDtTxt().substring(0,10));
                 Log.d("+++-", String.valueOf(tTemp));
                 Log.d("+++-", String.valueOf(count));
                 Log.d("+++-", String.valueOf(avgTemp));
                 count = 0;
                 avgTemp = 0.0f;
                 tTemp = 0.0f;
+                avgHumidity = 0;
+                avgPressure = 0.0;
+                tHumidity = 0;
+                tPressure = 0.0;
                 count += 1;
-                tTemp += weatherData.getList().get(i).getMain().getTemp();
+                tTemp += weatherList.get(i).getMain().getTemp();
+                tHumidity += weatherList.get(i).getMain().getHumidity();
+                tPressure += weatherList.get(i).getMain().getPressure();
             } else {
-                tTemp += weatherData.getList().get(i).getMain().getTemp();
+                // TODO: 09.02.2018 пофиксить дублирование
+                tTemp += weatherList.get(i).getMain().getTemp();
+                tHumidity += weatherList.get(i).getMain().getHumidity();
+                tPressure += weatherList.get(i).getMain().getPressure();
                 count += 1;
-                Log.d("+++", weatherData.getList().get(i).getDtTxt().substring(0,10));
+                Log.d("+++", weatherList.get(i).getDtTxt().substring(0,10));
                 Log.d("+++", String.valueOf(tTemp));
                 Log.d("+++", String.valueOf(count));
                 Log.d("+++", String.valueOf(avgTemp));
             }
             if (i > 0 && i < 8) {
-                hours.add(new HourWeather((long) weatherData.getList().get(i).getDt(),
-                        weatherData.getList().get(i).getWeather().get(0).getId(),
-                        weatherData.getList().get(i).getMain().getTemp()));
+                hours.add(new HourWeather((long) weatherList.get(i).getDt(),
+                        weatherList.get(i).getWeather().get(0).getId(),
+                        weatherList.get(i).getMain().getTemp()));
             }
         }
         String cityNameWithCountry = weatherData.getCity().getName() + ", " + weatherData.getCity().getCountry();
