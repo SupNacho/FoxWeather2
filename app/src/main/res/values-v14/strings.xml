@@ -3,6 +3,10 @@
     <string name="text_view_city_label">Enter city for displayin widget:</string>
     <string name="button_apply_settings_text">APPLY SETTINGS</string>
     <string name="add_city_button">Add city</string>
+    <string name="more_details_pressure_label">Pressure:</string>
+    <string name="more_datail_pressure_unit">hPa</string>
+    <string name="more_details_humidity_label">Humidity:</string>
+    <string name="more_details_humidity_unit">%</string>
     <string-array name="countries">
         <item>Russia</item>
         <item>USA</item>
