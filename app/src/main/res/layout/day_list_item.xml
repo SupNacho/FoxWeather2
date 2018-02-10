@@ -1,34 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_margin="@dimen/day_item_margin_3dp">
-    <TextView
-        android:id="@+id/text_view_day_date"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/day_item_margin_3dp"
-        android:padding="@dimen/days_text_padd_20dp"
-        android:textSize="@dimen/text_view_days_date_16sp"
-        android:text="Su, 10 december"
-        android:layout_weight="8"/>
-    <ImageView
-        android:id="@+id/image_view_day_icon"
-        android:src="@drawable/weather_icon_rain500"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/day_item_margin_3dp"
-        android:textSize="@dimen/text_size_day_item_18sp"
-        android:layout_weight="2"/>
-    <TextView
-        android:id="@+id/text_view_day_temp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/day_item_margin_3dp"
-        android:textSize="@dimen/text_size_day_item_18sp"
-        android:text="+5 c"
-        android:layout_weight="2"/>
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/day_item_margin_3dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_view_day_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/day_item_margin_3dp"
+            android:layout_weight="8"
+            android:padding="@dimen/days_text_padd_20dp"
+            tools:text="Su, 10 december"
+            android:textSize="@dimen/text_view_days_date_16sp"/>
+
+        <ImageView
+            android:id="@+id/image_view_day_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/day_item_margin_3dp"
+            android:layout_weight="2"
+            android:src="@drawable/weather_icon_rain500"
+            android:textSize="@dimen/text_size_day_item_18sp"
+            android:contentDescription="@string/description_main_frame_weather_image"/>
+
+        <TextView
+            android:id="@+id/text_view_day_temp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/day_item_margin_3dp"
+            android:layout_weight="2"
+            tools:text="+5 c"
+            android:textSize="@dimen/text_size_day_item_18sp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:id="@+id/frame_more_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingStart="20dp"
+            android:visibility="visible"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_more_info_pressure_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_standart_LR"
+                    android:layout_marginRight="@dimen/margin_standart_LR"
+                    android:text="@string/more_details_pressure_label"
+                    tools:text="Pressure:"/>
+
+                <TextView
+                    android:id="@+id/text_view_more_info_pressure_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_small_5dp"
+                    android:layout_marginRight="@dimen/margin_small_5dp"
+                    tools:text="955.6"/>
+
+                <TextView
+                    android:id="@+id/text_view_more_info_pressure_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_standart_LR"
+                    android:layout_marginRight="@dimen/margin_standart_LR"
+                    android:text="@string/more_detail_pressure_unit"
+                    tools:text="hPa"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_more_info_humidity_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_standart_LR"
+                    android:layout_marginRight="@dimen/margin_standart_LR"
+                    android:text="@string/more_details_humidity_label"
+                    tools:text="Humidity:"/>
+
+                <TextView
+                    android:id="@+id/text_view_more_info_humidity_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_small_5dp"
+                    android:layout_marginRight="@dimen/margin_small_5dp"
+                    tools:text="60"/>
+
+                <TextView
+                    android:id="@+id/text_view_more_info_humidity_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_standart_LR"
+                    android:layout_marginRight="@dimen/margin_standart_LR"
+                    android:text="@string/more_details_humidity_unit"
+                    tools:text="%"/>
+
+            </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/winds_at_this_day_label"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="25"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/text_view_more_info_wind_label_m"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_standart_LR"
+                        android:layout_marginRight="@dimen/margin_standart_LR"
+                        android:text="@string/more_info_wind_label_m"
+                        tools:text="Morning"/>
+
+                    <TextView
+                        android:id="@+id/text_view_more_info_degree_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_small_5dp"
+                        android:layout_marginRight="@dimen/margin_small_5dp"
+                        tools:text="245.5"/>
+
+                    <TextView
+                        android:id="@+id/text_view_more_info_wind_speed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_standart_LR"
+                        android:layout_marginRight="@dimen/margin_standart_LR"
+                        tools:text="5"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="25"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/text_view_more_info_wind_label_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_standart_LR"
+                        android:layout_marginRight="@dimen/margin_standart_LR"
+                        android:text="@string/more_info_wind_day"
+                        tools:text="Day"/>
+
+                    <TextView
+                        android:id="@+id/text_view_more_info_degree_data_d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_small_5dp"
+                        android:layout_marginRight="@dimen/margin_small_5dp"
+                        tools:text="245.5"/>
+
+                    <TextView
+                        android:id="@+id/text_view_more_info_wind_speed_d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_standart_LR"
+                        android:layout_marginRight="@dimen/margin_standart_LR"
+                        tools:text="5"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="25"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/text_view_more_info_wind_label_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_standart_LR"
+                        android:layout_marginRight="@dimen/margin_standart_LR"
+                        android:text="@string/more_info_wind_evening"
+                        tools:text="Evening"/>
+
+                    <TextView
+                        android:id="@+id/text_view_more_info_degree_data_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_small_5dp"
+                        android:layout_marginRight="@dimen/margin_small_5dp"
+                        tools:text="245.5"/>
+
+                    <TextView
+                        android:id="@+id/text_view_more_info_wind_speed_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_standart_LR"
+                        android:layout_marginRight="@dimen/margin_standart_LR"
+                        tools:text="5"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="25"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/text_view_more_info_wind_label_night"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_standart_LR"
+                        android:layout_marginRight="@dimen/margin_standart_LR"
+                        android:text="@string/more_info_wind_night"
+                        tools:text="Night"/>
+
+                    <TextView
+                        android:id="@+id/text_view_more_info_degree_data_n"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_small_5dp"
+                        android:layout_marginRight="@dimen/margin_small_5dp"
+                        tools:text="245.5"/>
+
+                    <TextView
+                        android:id="@+id/text_view_more_info_wind_speed_n"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_standart_LR"
+                        android:layout_marginRight="@dimen/margin_standart_LR"
+                        tools:text="5"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
 </LinearLayout>

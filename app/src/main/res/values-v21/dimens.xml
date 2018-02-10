@@ -6,4 +6,5 @@
     <dimen name="days_text_padd_20dp">20dp</dimen>
     <dimen name="text_view_days_date_16sp">16sp</dimen>
     <dimen name="widged_content_padding">10dp</dimen>
+    <dimen name="margin_small_5dp">5dp</dimen>
 </resources>
