@@ -11,9 +11,15 @@
     <string name="button_apply_settings_text">APPLY SETTINGS</string>
     <string name="add_city_button">Add city</string>
     <string name="more_details_pressure_label">Pressure:</string>
-    <string name="more_datail_pressure_unit">hPa</string>
+    <string name="more_detail_pressure_unit">hPa</string>
     <string name="more_details_humidity_label">Humidity:</string>
     <string name="more_details_humidity_unit">%</string>
+    <string name="more_info_wind_day">Day</string>
+    <string name="more_info_wind_label_m">Morning</string>
+    <string name="more_info_wind_evening">Evening</string>
+    <string name="more_info_wind_night">Night</string>
+    <string name="description_main_frame_weather_image">weather image</string>
+    <string name="winds_at_this_day_label">Winds at this day:</string>
     <string-array name="countries">
         <item>Russia</item>
         <item>USA</item>
