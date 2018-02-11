@@ -18,12 +18,8 @@ import fw.supernacho.ru.foxweather.recyclers.DaysAdapter;
 import fw.supernacho.ru.foxweather.recyclers.WeekAdapter;
 
 public class MainFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
-
+    private static final String CITY_NAME = "cityName";
     private WeatherInfoListener mainActivity;
     private DaysAdapter daysAdapter;
     private WeekAdapter weekAdapter;
@@ -37,22 +33,14 @@ public class MainFragment extends Fragment {
     }
 
 
-    public static MainFragment newInstance(String param1, String param2) {
+    public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -93,7 +81,7 @@ public class MainFragment extends Fragment {
         BroadcastReceiver serviceReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                textViewCityName.setText(intent.getStringExtra("cityName"));
+                textViewCityName.setText(intent.getStringExtra(CITY_NAME));
                 daysAdapter.notifyDataSetChanged();
                 weekAdapter.notifyDataSetChanged();
             }

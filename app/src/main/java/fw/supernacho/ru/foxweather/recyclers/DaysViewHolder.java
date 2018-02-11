@@ -37,7 +37,7 @@ public class DaysViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         imageViewWeatherIcon = itemView.findViewById(R.id.weather_icon);
         textViewTime = itemView.findViewById(R.id.text_view_hours_time);
         textViewTemp = itemView.findViewById(R.id.text_view_temp);
-        hours = MainData.getInstance().getDayPerdiction().getHours();
+        hours = MainData.getInstance().getDayPrediction().getHours();
         dateStamp = new SimpleDateFormat("HH:mm");
 
     }

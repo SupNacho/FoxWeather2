@@ -45,6 +45,14 @@ public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     WeekViewHolder(LayoutInflater inflater, ViewGroup parent, Context context) {
         super(inflater.inflate(R.layout.day_list_item, parent, false));
         itemView.setOnClickListener(this);
+        initViews();
+        frameMoreInfo.setVisibility(View.GONE);
+        daysList = MainData.getInstance().getWeekPrediction().getDaysList();
+        timeStamp = new SimpleDateFormat("E, dd MMMM", Locale.US);
+
+    }
+
+    private void initViews() {
         textViewDayDate = itemView.findViewById(R.id.text_view_day_date);
         imageViewDayIcon = itemView.findViewById(R.id.image_view_day_icon);
         textViewDayTemp = itemView.findViewById(R.id.text_view_day_temp);
@@ -59,10 +67,6 @@ public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         textViewWindSpeedE = itemView.findViewById(R.id.text_view_more_info_wind_speed_e);
         textViewWindSpeedN = itemView.findViewById(R.id.text_view_more_info_wind_speed_n);
         frameMoreInfo = itemView.findViewById(R.id.frame_more_info);
-        frameMoreInfo.setVisibility(View.GONE);
-        daysList = MainData.getInstance().getWeekPrediction().getDaysList();
-        timeStamp = new SimpleDateFormat("E, dd MMMM", Locale.US);
-
     }
 
     void bind(int position) {
@@ -113,7 +117,6 @@ public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View view) {
-// TODO: 25.12.2017 add some functional for view more details
         if (frameMoreInfo.getVisibility() == View.GONE) {
             frameMoreInfo.setVisibility(View.VISIBLE);
         } else {

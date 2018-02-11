@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import fw.supernacho.ru.foxweather.MainData;
-import fw.supernacho.ru.foxweather.R;
 
 /**
  * Created by SuperNacho on 12.11.2017.
@@ -30,6 +29,6 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysViewHolder>{
 
     @Override
     public int getItemCount() {
-        return MainData.getInstance().getDayPerdiction().getHours().size();
+        return MainData.getInstance().getDayPrediction().getHours().size();
     }
 }

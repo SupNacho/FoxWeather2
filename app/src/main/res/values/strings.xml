@@ -3,6 +3,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="empty_input_city_name">City name is empty!</string>
+    <string name="service_toast_city_not_found">City not found</string>
+    <string name="main_activ_unkwn_button">Unknown button</string>
+    <string name="main_data_city_added">City added</string>
+    <string name="main_data_city_already_in_list">City already in your list</string>
+    <string name="main_data_base_already_connected">Base already connected</string>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tomorrow_prediction">Tomorrow prediction</string>

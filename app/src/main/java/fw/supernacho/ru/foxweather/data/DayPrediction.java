@@ -18,7 +18,7 @@ public class DayPrediction {
     private int humidity;
     private double pressure;
     private List<Wind> winds;
-//Добавить Влажность, Давление, ветры и температуру (утро, день, вечер, ночь)?
+
     public DayPrediction(int dayIcoId, long dayDt, double dayTemp) {
         this.dayIcoId = dayIcoId;
         this.dayDt = dayDt;
@@ -65,23 +65,11 @@ public class DayPrediction {
         return humidity;
     }
 
-    public void setHumidity(int humidity) {
-        this.humidity = humidity;
-    }
-
     public String getPressure() {
         return String.format(Locale.ENGLISH,"%.1f", pressure);
     }
 
-    public void setPressure(double pressure) {
-        this.pressure = pressure;
-    }
-
     public List<Wind> getWinds() {
         return winds;
-    }
-
-    public void setWinds(List<Wind> winds) {
-        this.winds = winds;
     }
 }
