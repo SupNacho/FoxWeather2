@@ -48,15 +48,12 @@ public class WidgetConfigActivity extends AppCompatActivity {
     }
 
     public void onClickButton(View view) {
-        Log.d(">>>>>>", "onClik");
         if (view.getId() == R.id.button_apply_settings){
             if (editViewCityName.getText().length() > 0){
-                Log.d(">>>>>>", "in IF");
                 SharedPreferences sharedPreferences = getSharedPreferences(WIDGET_PREF, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(WIDGET_CITY + widgetID, editViewCityName.getText().toString());
                 editor.apply();
-                Log.d(">>>>>", "Entered city " + editViewCityName.getText().toString());
                 setResult(RESULT_OK, resultValue);
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                 WeatherWidget.updateAppWidget(this, appWidgetManager, widgetID,
