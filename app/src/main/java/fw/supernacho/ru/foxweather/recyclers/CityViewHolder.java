@@ -5,10 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -16,12 +14,6 @@ import fw.supernacho.ru.foxweather.MainActivity;
 import fw.supernacho.ru.foxweather.MainData;
 import fw.supernacho.ru.foxweather.R;
 import fw.supernacho.ru.foxweather.data.City;
-
-import static fw.supernacho.ru.foxweather.MainData.getInstance;
-
-/**
- * Created by SuperNacho on 12.11.2017.
- */
 
 public class CityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
