@@ -32,22 +32,25 @@ public class CsvParser {
         this.context = context;
     }
 
-    public void parseCSV(int resurcesID){
+    public void parseCSV(int resourcesID){
         try {
             Resources resources = context.getResources();
-            bufferedReader = new BufferedReader(new InputStreamReader(resources.openRawResource(R.raw.country_codes)));
+            bufferedReader = new BufferedReader(new InputStreamReader(resources.openRawResource(resourcesID)));
             String line =null;
-            while ((line = bufferedReader.readLine()) != null){
-                String[] result = line.split(",");
-                String title = result[0];
-                Log.d("////", title);
-                String tag = result[1];
-                Log.d("////", tag);
-                ContentValues values = new ContentValues();
-                values.put(DataBaseHelper.COLUMN_TITLE, title);
-                values.put(DataBaseHelper.COLUMN_TAG, tag);
-                long ins = dataBase.insert(DataBaseHelper.TABLE_COUNTRIES, null, values);
-                Log.d("////", String.valueOf(ins));
+            dataBase.beginTransaction();
+            try {
+                while ((line = bufferedReader.readLine()) != null) {
+                    String[] result = line.split(",");
+                    String title = result[0];
+                    String tag = result[1];
+                    ContentValues values = new ContentValues();
+                    values.put(DataBaseHelper.COLUMN_TITLE, title);
+                    values.put(DataBaseHelper.COLUMN_TAG, tag);
+                    long ins = dataBase.insert(DataBaseHelper.TABLE_COUNTRIES, null, values);
+                }
+                dataBase.setTransactionSuccessful();
+            } finally {
+                dataBase.endTransaction();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
