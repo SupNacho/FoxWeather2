@@ -36,7 +36,7 @@ public class CityDataSource {
         dataBase = dbHelper.getWritableDatabase();
         if (checkTable(DataBaseHelper.TABLE_COUNTRIES)){
             if (!checkRecords(DataBaseHelper.TABLE_COUNTRIES)) {
-                new CsvParser(dbHelper, dataBase, context).parseCSV(R.raw.country_codes);
+                new CsvParser(dataBase, context).parseCSV(R.raw.country_codes);
             }
         }
     }

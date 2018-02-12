@@ -21,13 +21,11 @@ import fw.supernacho.ru.foxweather.data.DataBaseHelper;
  */
 
 public class CsvParser {
-    private DataBaseHelper dbHelper;
     private BufferedReader bufferedReader;
     private SQLiteDatabase dataBase;
     private Context context;
 
-    public CsvParser(DataBaseHelper dbHelper, SQLiteDatabase dataBase, Context context){
-        this.dbHelper = dbHelper;
+    public CsvParser(SQLiteDatabase dataBase, Context context){
         this.dataBase = dataBase;
         this.context = context;
     }
