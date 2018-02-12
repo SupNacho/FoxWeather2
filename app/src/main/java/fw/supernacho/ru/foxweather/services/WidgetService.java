@@ -4,8 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
 import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -18,13 +16,14 @@ import fw.supernacho.ru.foxweather.widget.WeatherWidget;
 
 public class WidgetService extends IntentService {
 
-    private static final String ACTION_GET_WEATHER = "fw.supernacho.ru.foxweather.services.action.GET_WEATHER";
     private static final String UPDATE_WIDGET_ACTION = "android.appwidget.action.APPWIDGET_UPDATE";
     private static final String CITY_NAME = "fw.supernacho.ru.foxweather.services.extra.CITY_NAME";
     private final Handler handler = new Handler();
+    private WidgetRenderInterface renderer;
 
     public WidgetService() {
         super("WidgetService");
+        renderer = new OpenWeatherWidgetRender();
     }
 
     public static void startActionGetWeather(Context context, String cityName, int id) {
@@ -48,10 +47,6 @@ public class WidgetService extends IntentService {
         }
     }
 
-    /**
-     * Handle action Foo in the provided background thread with the provided
-     * parameters.
-     */
     private void handleWeather(final String city, final int id) {
         new Thread(){
             public void run(){
@@ -68,7 +63,13 @@ public class WidgetService extends IntentService {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            renderWeather(json, city, id);
+                            renderer.renderWeather(json);
+                            Intent weatherDataBroadcast = new Intent(UPDATE_WIDGET_ACTION);
+                            weatherDataBroadcast.putExtra("icon", renderer.getIconId());
+                            weatherDataBroadcast.putExtra("temp", renderer.getTemp());
+                            weatherDataBroadcast.putExtra("cityName", renderer.getCity());
+                            weatherDataBroadcast.putExtra("id", id);
+                            sendBroadcast(weatherDataBroadcast);
                         }
                     });
                 }
@@ -76,25 +77,25 @@ public class WidgetService extends IntentService {
         }.start();
     }
 
-    private void renderWeather(JSONObject json, String cityName, int id){
-        try {
-
-            JSONArray daysOfWeek = json.getJSONArray("list");
-            JSONObject hour = daysOfWeek.getJSONObject(0);
-            JSONObject main = hour.getJSONObject("main");
-            JSONObject details = hour.getJSONArray("weather").getJSONObject(0);
-            int iconId =details.getInt("id");
-            double temp = main.getDouble("temp");
-
-            Intent weatherDataBroadcast = new Intent(UPDATE_WIDGET_ACTION);
-            weatherDataBroadcast.putExtra("icon", iconId);
-            weatherDataBroadcast.putExtra("temp", temp);
-            weatherDataBroadcast.putExtra("cityName", cityName);
-            weatherDataBroadcast.putExtra("id", id);
-            sendBroadcast(weatherDataBroadcast);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void renderWeather(JSONObject json, String cityName, int id){
+//        try {
+//
+//            JSONArray daysOfWeek = json.getJSONArray("list");
+//            JSONObject hour = daysOfWeek.getJSONObject(0);
+//            JSONObject main = hour.getJSONObject("main");
+//            JSONObject details = hour.getJSONArray("weather").getJSONObject(0);
+//            int iconId =details.getInt("id");
+//            double temp = main.getDouble("temp");
+//
+//            Intent weatherDataBroadcast = new Intent(UPDATE_WIDGET_ACTION);
+//            weatherDataBroadcast.putExtra("icon", iconId);
+//            weatherDataBroadcast.putExtra("temp", temp);
+//            weatherDataBroadcast.putExtra("cityName", cityName);
+//            weatherDataBroadcast.putExtra("id", id);
+//            sendBroadcast(weatherDataBroadcast);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }
