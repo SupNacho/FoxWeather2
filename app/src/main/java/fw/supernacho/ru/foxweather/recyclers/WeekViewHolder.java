@@ -1,6 +1,5 @@
 package fw.supernacho.ru.foxweather.recyclers;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +17,6 @@ import fw.supernacho.ru.foxweather.MainData;
 import fw.supernacho.ru.foxweather.R;
 import fw.supernacho.ru.foxweather.data.DayPrediction;
 import fw.supernacho.ru.foxweather.data.weather.Wind;
-
-/**
- * Created by SuperNacho on 12.11.2017.
- */
 
 public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -42,7 +37,7 @@ public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     private TextView textViewWindSpeedN;
     private LinearLayout frameMoreInfo;
 
-    WeekViewHolder(LayoutInflater inflater, ViewGroup parent, Context context) {
+    WeekViewHolder(LayoutInflater inflater, ViewGroup parent) {
         super(inflater.inflate(R.layout.day_list_item, parent, false));
         itemView.setOnClickListener(this);
         initViews();

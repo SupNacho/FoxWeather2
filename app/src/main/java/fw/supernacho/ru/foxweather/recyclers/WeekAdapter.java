@@ -6,11 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import fw.supernacho.ru.foxweather.MainData;
-import fw.supernacho.ru.foxweather.R;
 
-/**
- * Created by SuperNacho on 12.11.2017.
- */
 
 public class WeekAdapter extends RecyclerView.Adapter<WeekViewHolder>{
     private Context context;
@@ -20,7 +16,7 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekViewHolder>{
     @Override
     public WeekViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        return new WeekViewHolder(inflater, parent, context);
+        return new WeekViewHolder(inflater, parent);
     }
 
     @Override
