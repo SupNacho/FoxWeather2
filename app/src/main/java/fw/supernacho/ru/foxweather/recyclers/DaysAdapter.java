@@ -7,19 +7,17 @@ import android.view.ViewGroup;
 
 import fw.supernacho.ru.foxweather.MainData;
 
-/**
- * Created by SuperNacho on 12.11.2017.
- */
+
 
 public class DaysAdapter extends RecyclerView.Adapter<DaysViewHolder>{
-    Context context;
+    private Context context;
     public DaysAdapter(Context context){
         this.context = context;
     }
     @Override
     public DaysViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        return new DaysViewHolder(inflater, parent, context);
+        return new DaysViewHolder(inflater, parent);
     }
 
     @Override
