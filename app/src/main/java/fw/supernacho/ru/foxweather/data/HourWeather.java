@@ -1,8 +1,6 @@
 package fw.supernacho.ru.foxweather.data;
 
-/**
- * Created by SuperNacho on 09.12.2017.
- */
+import java.util.Locale;
 
 public class HourWeather {
     private long dt;
@@ -23,10 +21,7 @@ public class HourWeather {
         return id;
     }
 
-    public double getTemp() {
-        return temp;
-    }
     public String getStringTemp() {
-        return String.format("%.1f", temp);
+        return String.format(Locale.ENGLISH,"%.1f", temp);
     }
 }
