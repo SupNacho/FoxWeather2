@@ -67,6 +67,7 @@ public class WeatherService extends Service {
                                     Toast.LENGTH_SHORT).show();
                 } else {
                     String cityNameWithCountry = weatherRenderer.renderWeather(json);
+                    MainData.getInstance().addOfflineSrc(cityName, json);
                     Intent intent = new Intent(DATA_READY);
                     intent.putExtra("cityName", cityNameWithCountry);
                     LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
