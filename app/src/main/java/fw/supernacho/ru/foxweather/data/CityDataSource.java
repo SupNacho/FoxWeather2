@@ -52,6 +52,21 @@ public class CityDataSource {
         return false;
     }
 
+    public void saveCityWeather(String cityName, long datestamp, int temp, int iconCode, String jsonObj){
+        ContentValues values = new ContentValues();
+        values.put(DataBaseHelper.COLUMN_CITY, cityName);
+        values.put(DataBaseHelper.COLUMN_DATE, datestamp);
+        values.put(DataBaseHelper.COLUMN_TEMP, temp);
+        values.put(DataBaseHelper.COLUMN_ICON, iconCode);
+        values.put(DataBaseHelper.COLUMN_SUMMARY, jsonObj);
+        long id = checkCityInBase(DataBaseHelper.TABLE_WEATHER_LOGS, cityName);
+        if (id >0) {
+            dataBase.update(DataBaseHelper.TABLE_WEATHER_LOGS, values, DataBaseHelper.COLUMN_ID + "=" + id, null);
+        } else {
+            dataBase.insert(DataBaseHelper.TABLE_WEATHER_LOGS, null, values);
+        }
+    }
+
     private long checkCityInBase(String table, String cityName){
         Cursor cursor = dataBase.query(table, citiesAllNames, "CITY = ?", new String[] {cityName}, null, null, null);
         cursor.moveToFirst();
