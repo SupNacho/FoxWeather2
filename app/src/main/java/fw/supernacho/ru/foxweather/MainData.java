@@ -3,6 +3,8 @@ package fw.supernacho.ru.foxweather;
 import android.content.Context;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import fw.supernacho.ru.foxweather.data.City;
@@ -56,6 +58,10 @@ public class MainData {
     public void removeCity(City removedCity) {
         cityDataSource.deleteCity(removedCity);
         main.getCityAdapter().notifyDataSetChanged();
+    }
+
+    public void addOfflineSrc(String city, JSONObject json){
+        cityDataSource.saveCityWeather(city, System.currentTimeMillis(), 0, 800, json.toString());
     }
 
     public void setContext(Context context) {
