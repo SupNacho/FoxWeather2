@@ -11,11 +11,7 @@ import java.util.List;
 
 import fw.supernacho.ru.foxweather.CsvParser;
 import fw.supernacho.ru.foxweather.R;
-import fw.supernacho.ru.foxweather.data.weather.Country;
-
-/**
- * Created by SuperNacho on 14.12.2017.
- */
+import fw.supernacho.ru.foxweather.data.openweather.Country;
 
 public class CityDataSource {
     private DataBaseHelper dbHelper;
@@ -36,7 +32,7 @@ public class CityDataSource {
         dataBase = dbHelper.getWritableDatabase();
         if (checkTable(DataBaseHelper.TABLE_COUNTRIES)){
             if (!checkRecords(DataBaseHelper.TABLE_COUNTRIES)) {
-                new CsvParser(dbHelper, dataBase, context).parseCSV(R.raw.country_codes);
+                new CsvParser(dataBase, context).parseCSV(R.raw.country_codes);
             }
         }
     }
@@ -50,13 +46,13 @@ public class CityDataSource {
         values.put(DataBaseHelper.COLUMN_CITY, cityName);
         long cityCount = checkCityInBase(DataBaseHelper.TABLE_CITIES, cityName);
         if (cityCount == 0) {
-            long insertId = dataBase.insert(DataBaseHelper.TABLE_CITIES, null, values);
+            dataBase.insert(DataBaseHelper.TABLE_CITIES, null, values);
             return true;
         }
         return false;
     }
 
-    public void saveCityStat(String cityName, long datestamp, int temp, int iconCode, String jsonObj){
+    public void saveCityWeather(String cityName, long datestamp, int temp, int iconCode, String jsonObj){
         ContentValues values = new ContentValues();
         values.put(DataBaseHelper.COLUMN_CITY, cityName);
         values.put(DataBaseHelper.COLUMN_DATE, datestamp);
@@ -67,8 +63,7 @@ public class CityDataSource {
         if (id >0) {
             dataBase.update(DataBaseHelper.TABLE_WEATHER_LOGS, values, DataBaseHelper.COLUMN_ID + "=" + id, null);
         } else {
-            long insertStatId = dataBase.insert(DataBaseHelper.TABLE_WEATHER_LOGS, null, values);
-            System.out.println(">>> added stat id: " + insertStatId);
+            dataBase.insert(DataBaseHelper.TABLE_WEATHER_LOGS, null, values);
         }
     }
 
@@ -115,10 +110,6 @@ public class CityDataSource {
     public void deleteCity(City city){
         long id = city.getId();
         dataBase.delete(DataBaseHelper.TABLE_CITIES, DataBaseHelper.COLUMN_ID + " = " + id, null);
-    }
-
-    public void deleteAllCities(){
-        dataBase.delete(DataBaseHelper.TABLE_CITIES, null, null);
     }
 
     public List<City> getAllCities(){

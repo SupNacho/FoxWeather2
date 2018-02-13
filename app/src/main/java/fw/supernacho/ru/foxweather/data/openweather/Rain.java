@@ -1,11 +1,11 @@
 
-package fw.supernacho.ru.foxweather.data.weather;
+package fw.supernacho.ru.foxweather.data.openweather;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class Snow {
+public class Rain {
 
     @SerializedName("3h")
     @Expose
@@ -15,14 +15,14 @@ public class Snow {
      * No args constructor for use in serialization
      * 
      */
-    public Snow() {
+    public Rain() {
     }
 
     /**
      * 
      * @param _3h
      */
-    public Snow(double _3h) {
+    public Rain(double _3h) {
         super();
         this._3h = _3h;
     }
@@ -35,7 +35,7 @@ public class Snow {
         this._3h = _3h;
     }
 
-    public Snow with3h(double _3h) {
+    public Rain with3h(double _3h) {
         this._3h = _3h;
         return this;
     }

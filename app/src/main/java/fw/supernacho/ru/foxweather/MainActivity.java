@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final int HORIZONTAL = 0;
     public static final int VERTICAL = 1;
-    private PreferencesFragment preferencesFragment;
+    private static final String CITY_NAME = "cityName";
     private AddCityFragment addCityFragment;
     private DrawerLayout drawer;
     private WeatherPreference weatherPreference;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
 
     private boolean serviceBind = false;
     private ServiceConnection serviceConnection;
-    WeatherService weatherService;
+    private WeatherService weatherService;
 
 
     @Override
@@ -54,27 +54,12 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab_share_weather);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("text/plane");
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Some subject");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, "Some weather data");
-                startActivity(shareIntent);
-            }
-        });
-
         initRecyclers();
         MainData.getInstance().setContext(getApplicationContext());
         MainData.getInstance().setMainActivity(this);
         weatherPreference = new WeatherPreference(this);
         initService(weatherPreference.getCity());
-        if (savedInstanceState == null) {
-            init();
-        }
+        if (savedInstanceState == null) init();
 
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -106,31 +91,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            openPrefs();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void openPrefs() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.addToBackStack(null);
-        transaction.replace(R.id.fragment_container, preferencesFragment);
-        transaction.commit();
-    }
-
-    @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.button_add:
@@ -144,12 +104,9 @@ public class MainActivity extends AppCompatActivity
                 isMenuEditable = !isMenuEditable;
                 cityAdapter.notifyDataSetChanged();
                 break;
-            case R.id.button_settings:
-                openPrefs();
-                drawer.closeDrawer(GravityCompat.START);
-                break;
             default:
-                Snackbar.make(view, "Unknown button", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, getResources().getString(R.string.main_activ_unkwn_button),
+                        Snackbar.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -166,9 +123,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void init(){
-        preferencesFragment = PreferencesFragment.newInstance(null, null);
-        addCityFragment = AddCityFragment.newInstance(null, null);
-        MainFragment mainFragment = MainFragment.newInstance(null, null);
+        addCityFragment = AddCityFragment.newInstance();
+        MainFragment mainFragment = MainFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, mainFragment);
         fragmentTransaction.commit();
@@ -176,10 +132,8 @@ public class MainActivity extends AppCompatActivity
 
         Button buttonAdd = findViewById(R.id.button_add);
         Button buttonEdit = findViewById(R.id.button_edit);
-        Button buttonSetting = findViewById(R.id.button_settings);
         buttonAdd.setOnClickListener(this);
         buttonEdit.setOnClickListener(this);
-        buttonSetting.setOnClickListener(this);
     }
 
     private void initService(final String cityName){
@@ -209,7 +163,7 @@ public class MainActivity extends AppCompatActivity
         if (!serviceBind) return;
         updateCityWeather(city);
         Intent intentUpdateWidgetCity = new Intent(WeatherWidget.ACTION_GET_WEATHER);
-        intentUpdateWidgetCity.putExtra("cityName", city);
+        intentUpdateWidgetCity.putExtra(CITY_NAME, city);
         sendBroadcast(intentUpdateWidgetCity);
         drawer.closeDrawer(GravityCompat.START);
     }

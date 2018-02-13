@@ -5,12 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import fw.supernacho.ru.foxweather.MainActivity;
 import fw.supernacho.ru.foxweather.MainData;
-
-/**
- * Created by SuperNacho on 12.11.2017.
- */
 
 public class CityAdapter extends RecyclerView.Adapter<CityViewHolder>{
     private Context context;

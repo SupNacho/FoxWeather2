@@ -3,13 +3,15 @@ package fw.supernacho.ru.foxweather;
 import android.content.Context;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import fw.supernacho.ru.foxweather.data.City;
 import fw.supernacho.ru.foxweather.data.CityDataSource;
 import fw.supernacho.ru.foxweather.data.DayPrediction;
 import fw.supernacho.ru.foxweather.data.WeekPrediction;
-import fw.supernacho.ru.foxweather.data.weather.Country;
+import fw.supernacho.ru.foxweather.data.openweather.Country;
 
 /**
  * Created by SuperNacho on 08.12.2017.
@@ -18,7 +20,7 @@ import fw.supernacho.ru.foxweather.data.weather.Country;
 public class MainData {
     private static final MainData ourInstance = new MainData();
     private WeekPrediction weekPrediction;
-    private DayPrediction dayPerdiction;
+    private DayPrediction dayPrediction;
     private CityDataSource cityDataSource;
     private MainActivity main;
 
@@ -28,40 +30,42 @@ public class MainData {
 
     private MainData() {
         weekPrediction = new WeekPrediction();
-        dayPerdiction = new DayPrediction();
+        dayPrediction = new DayPrediction();
     }
 
-    public boolean addCity(String city){
+    public boolean addCity(String city) {
         if (cityDataSource.addCity(city)) {
             Toast.makeText(main.getApplicationContext(),
-                    "City added.", Toast.LENGTH_SHORT).show();
+                    main.getResources().getString(R.string.main_data_city_added),
+                    Toast.LENGTH_SHORT).show();
             return true;
         } else {
-            Toast.makeText(main.getApplicationContext(), "City already in your list",
+            Toast.makeText(main.getApplicationContext(), main.getResources()
+                            .getString(R.string.main_data_city_already_in_list),
                     Toast.LENGTH_SHORT).show();
         }
         return false;
     }
 
-    public List<City> getCities(){
+    public List<City> getCities() {
         return cityDataSource.getAllCities();
     }
 
-    public List<Country> getCountries(){
+    public List<Country> getCountries() {
         return cityDataSource.getCountries();
     }
 
-    public void removeCity(City removedCity){
+    public void removeCity(City removedCity) {
         cityDataSource.deleteCity(removedCity);
         main.getCityAdapter().notifyDataSetChanged();
     }
 
-    public void setContext(Context context){
-        setDataBase(context);
+    public void addOfflineSrc(String city, JSONObject json){
+        cityDataSource.saveCityWeather(city, System.currentTimeMillis(), 0, 800, json.toString());
     }
 
-    public void saveCityStat(String cityName, long dateStamp, int temp, int iconCode, String jsonObj){
-        cityDataSource.saveCityStat(cityName, dateStamp, temp, iconCode, jsonObj);
+    public void setContext(Context context) {
+        setDataBase(context);
     }
 
     private void setDataBase(Context context) {
@@ -69,11 +73,12 @@ public class MainData {
             cityDataSource = new CityDataSource(context);
             cityDataSource.open();
         } else {
-            Toast.makeText(context, "Base already connected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, main.getResources()
+                    .getString(R.string.main_data_base_already_connected), Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void closeDB(){
+    public void closeDB() {
         cityDataSource.close();
     }
 
@@ -81,11 +86,11 @@ public class MainData {
         return weekPrediction;
     }
 
-    public DayPrediction getDayPerdiction() {
-        return dayPerdiction;
+    public DayPrediction getDayPrediction() {
+        return dayPrediction;
     }
 
-    public void setMainActivity(MainActivity main){
+    public void setMainActivity(MainActivity main) {
         this.main = main;
     }
 

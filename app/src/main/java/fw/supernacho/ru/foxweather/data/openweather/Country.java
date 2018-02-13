@@ -1,4 +1,4 @@
-package fw.supernacho.ru.foxweather.data.weather;
+package fw.supernacho.ru.foxweather.data.openweather;
 
 /**
  * Created by SuperNacho on 06.02.2018.

@@ -14,10 +14,6 @@ import java.net.URL;
 
 import fw.supernacho.ru.foxweather.R;
 
-/**
- * Created by SuperNacho on 19.11.2017.
- */
-
 public class WeatherDataLoader {
     private static final String OPEN_WEATHER_API = "http://api.openweathermap.org/data/2.5/forecast?q=%s&units=metric";
     private static final String KEY = "x-api-key";
@@ -46,7 +42,7 @@ public class WeatherDataLoader {
             }
             return jsonObject;
         } catch (MalformedURLException e){
-            e.printStackTrace(); // TODO: 19.11.2017 Сделать вывод сообщений об ошибках и соответствующий функционал
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

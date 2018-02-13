@@ -1,5 +1,5 @@
 
-package fw.supernacho.ru.foxweather.data.weather;
+package fw.supernacho.ru.foxweather.data.openweather;
 
 import java.util.ArrayList;
 import com.google.gson.annotations.Expose;

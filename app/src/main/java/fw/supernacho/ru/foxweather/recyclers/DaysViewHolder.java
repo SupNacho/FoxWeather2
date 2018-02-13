@@ -1,9 +1,7 @@
 package fw.supernacho.ru.foxweather.recyclers;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,35 +9,27 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
-import fw.supernacho.ru.foxweather.MainActivity;
 import fw.supernacho.ru.foxweather.MainData;
 import fw.supernacho.ru.foxweather.R;
 import fw.supernacho.ru.foxweather.data.HourWeather;
 
-/**
- * Created by SuperNacho on 12.11.2017.
- */
-
-public class DaysViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class DaysViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView imageViewWeatherIcon;
     private TextView textViewTime;
     private TextView textViewTemp;
-    private Context context;
     private List<HourWeather> hours;
     private DateFormat dateStamp;
 
-    DaysViewHolder(LayoutInflater inflater, ViewGroup parent, Context context){
+    DaysViewHolder(LayoutInflater inflater, ViewGroup parent){
         super(inflater.inflate(R.layout.hour_list_item, parent, false));
-        this.context = context;
-        itemView.setOnClickListener(this);
         imageViewWeatherIcon = itemView.findViewById(R.id.weather_icon);
         textViewTime = itemView.findViewById(R.id.text_view_hours_time);
         textViewTemp = itemView.findViewById(R.id.text_view_temp);
-        hours = MainData.getInstance().getDayPerdiction().getHours();
-        dateStamp = new SimpleDateFormat("HH:mm");
-
+        hours = MainData.getInstance().getDayPrediction().getHours();
+        dateStamp = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
     }
 
     void bind (int position){
@@ -75,15 +65,5 @@ public class DaysViewHolder extends RecyclerView.ViewHolder implements View.OnCl
                     break;
             }
         }
-    }
-
-    @Override
-    public void onClick(View view) {
-//        todo: some functional to view more details
-
-    }
-
-    private void showMoreInfo(int layoutPosition) {
-        ((MainActivity)context).onListItemClick(layoutPosition);
     }
 }
