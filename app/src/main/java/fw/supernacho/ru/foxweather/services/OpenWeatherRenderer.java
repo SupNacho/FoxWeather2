@@ -8,8 +8,8 @@ import java.util.List;
 import fw.supernacho.ru.foxweather.MainData;
 import fw.supernacho.ru.foxweather.data.DayPrediction;
 import fw.supernacho.ru.foxweather.data.HourWeather;
-import fw.supernacho.ru.foxweather.data.weather.WeatherData;
-import fw.supernacho.ru.foxweather.data.weather.Wind;
+import fw.supernacho.ru.foxweather.data.openweather.WeatherData;
+import fw.supernacho.ru.foxweather.data.openweather.Wind;
 
 /**
  * Created by SuperNacho on 11.02.2018.
@@ -39,7 +39,7 @@ public class OpenWeatherRenderer implements RenderInterface {
         double avgPressure;
         double tPressure = 0.0;
         int count = 0;
-        List<fw.supernacho.ru.foxweather.data.weather.List> weatherList = weatherData.getList();
+        List<fw.supernacho.ru.foxweather.data.openweather.List> weatherList = weatherData.getList();
         List<Wind> winds = new ArrayList<>(4);
         winds.add(new Wind());
         winds.add(new Wind());
@@ -84,7 +84,7 @@ public class OpenWeatherRenderer implements RenderInterface {
         return weatherData.getCity().getName() + ", " + weatherData.getCity().getCountry();
     }
 
-    private void addWinds(List<fw.supernacho.ru.foxweather.data.weather.List> weatherList, List<Wind> winds, int i) {
+    private void addWinds(List<fw.supernacho.ru.foxweather.data.openweather.List> weatherList, List<Wind> winds, int i) {
         if ( weatherList.get(i).getDtTxt().contains("00:00:00") ||
                 weatherList.get(i).getDtTxt().contains("03:00:00")){
             winds.add(0, weatherList.get(i).getWind());

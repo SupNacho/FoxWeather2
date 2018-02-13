@@ -1,7 +1,6 @@
 package fw.supernacho.ru.foxweather;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import java.util.List;
-import fw.supernacho.ru.foxweather.data.weather.Country;
+import fw.supernacho.ru.foxweather.data.openweather.Country;
 import fw.supernacho.ru.foxweather.prefs.WeatherPreference;
 
 

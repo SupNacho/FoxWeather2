@@ -16,7 +16,7 @@ import java.util.Locale;
 import fw.supernacho.ru.foxweather.MainData;
 import fw.supernacho.ru.foxweather.R;
 import fw.supernacho.ru.foxweather.data.DayPrediction;
-import fw.supernacho.ru.foxweather.data.weather.Wind;
+import fw.supernacho.ru.foxweather.data.openweather.Wind;
 
 public class WeekViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

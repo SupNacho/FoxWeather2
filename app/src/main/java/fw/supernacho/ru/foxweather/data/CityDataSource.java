@@ -11,11 +11,7 @@ import java.util.List;
 
 import fw.supernacho.ru.foxweather.CsvParser;
 import fw.supernacho.ru.foxweather.R;
-import fw.supernacho.ru.foxweather.data.weather.Country;
-
-/**
- * Created by SuperNacho on 14.12.2017.
- */
+import fw.supernacho.ru.foxweather.data.openweather.Country;
 
 public class CityDataSource {
     private DataBaseHelper dbHelper;
@@ -50,26 +46,10 @@ public class CityDataSource {
         values.put(DataBaseHelper.COLUMN_CITY, cityName);
         long cityCount = checkCityInBase(DataBaseHelper.TABLE_CITIES, cityName);
         if (cityCount == 0) {
-            long insertId = dataBase.insert(DataBaseHelper.TABLE_CITIES, null, values);
+            dataBase.insert(DataBaseHelper.TABLE_CITIES, null, values);
             return true;
         }
         return false;
-    }
-
-    public void saveCityStat(String cityName, long datestamp, int temp, int iconCode, String jsonObj){
-        ContentValues values = new ContentValues();
-        values.put(DataBaseHelper.COLUMN_CITY, cityName);
-        values.put(DataBaseHelper.COLUMN_DATE, datestamp);
-        values.put(DataBaseHelper.COLUMN_TEMP, temp);
-        values.put(DataBaseHelper.COLUMN_ICON, iconCode);
-        values.put(DataBaseHelper.COLUMN_SUMMARY, jsonObj);
-        long id = checkCityInBase(DataBaseHelper.TABLE_WEATHER_LOGS, cityName);
-        if (id >0) {
-            dataBase.update(DataBaseHelper.TABLE_WEATHER_LOGS, values, DataBaseHelper.COLUMN_ID + "=" + id, null);
-        } else {
-            long insertStatId = dataBase.insert(DataBaseHelper.TABLE_WEATHER_LOGS, null, values);
-            System.out.println(">>> added stat id: " + insertStatId);
-        }
     }
 
     private long checkCityInBase(String table, String cityName){
@@ -115,10 +95,6 @@ public class CityDataSource {
     public void deleteCity(City city){
         long id = city.getId();
         dataBase.delete(DataBaseHelper.TABLE_CITIES, DataBaseHelper.COLUMN_ID + " = " + id, null);
-    }
-
-    public void deleteAllCities(){
-        dataBase.delete(DataBaseHelper.TABLE_CITIES, null, null);
     }
 
     public List<City> getAllCities(){

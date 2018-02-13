@@ -1,5 +1,5 @@
 
-package fw.supernacho.ru.foxweather.data.weather;
+package fw.supernacho.ru.foxweather.data.openweather;
 
 import java.util.ArrayList;
 import com.google.gson.annotations.Expose;
@@ -19,7 +19,7 @@ public class WeatherData {
     private int cnt;
     @SerializedName("list")
     @Expose
-    private java.util.List<fw.supernacho.ru.foxweather.data.weather.List> list = new ArrayList<fw.supernacho.ru.foxweather.data.weather.List>();
+    private java.util.List<fw.supernacho.ru.foxweather.data.openweather.List> list = new ArrayList<fw.supernacho.ru.foxweather.data.openweather.List>();
     @SerializedName("city")
     @Expose
     private City city;
@@ -39,7 +39,7 @@ public class WeatherData {
      * @param list
      * @param city
      */
-    public WeatherData(String cod, double message, int cnt, java.util.List<fw.supernacho.ru.foxweather.data.weather.List> list, City city) {
+    public WeatherData(String cod, double message, int cnt, java.util.List<fw.supernacho.ru.foxweather.data.openweather.List> list, City city) {
         super();
         this.cod = cod;
         this.message = message;
@@ -87,15 +87,15 @@ public class WeatherData {
         return this;
     }
 
-    public java.util.List<fw.supernacho.ru.foxweather.data.weather.List> getList() {
+    public java.util.List<fw.supernacho.ru.foxweather.data.openweather.List> getList() {
         return list;
     }
 
-    public void setList(java.util.List<fw.supernacho.ru.foxweather.data.weather.List> list) {
+    public void setList(java.util.List<fw.supernacho.ru.foxweather.data.openweather.List> list) {
         this.list = list;
     }
 
-    public WeatherData withList(java.util.List<fw.supernacho.ru.foxweather.data.weather.List> list) {
+    public WeatherData withList(java.util.List<fw.supernacho.ru.foxweather.data.openweather.List> list) {
         this.list = list;
         return this;
     }

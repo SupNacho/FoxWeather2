@@ -9,7 +9,7 @@ import fw.supernacho.ru.foxweather.data.City;
 import fw.supernacho.ru.foxweather.data.CityDataSource;
 import fw.supernacho.ru.foxweather.data.DayPrediction;
 import fw.supernacho.ru.foxweather.data.WeekPrediction;
-import fw.supernacho.ru.foxweather.data.weather.Country;
+import fw.supernacho.ru.foxweather.data.openweather.Country;
 
 /**
  * Created by SuperNacho on 08.12.2017.
