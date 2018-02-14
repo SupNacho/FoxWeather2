@@ -27,4 +27,6 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="widged_content_padding">10dp</dimen>
     <dimen name="margin_small_5dp">5dp</dimen>
     <dimen name="add_fragment_spinner_height">40dp</dimen>
+    <dimen name="widget_info_min_height">40dip</dimen>
+    <dimen name="widget_info_min_width">100dip</dimen>
 </resources>
