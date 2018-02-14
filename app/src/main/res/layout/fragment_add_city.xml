@@ -11,9 +11,8 @@
     <Spinner
         android:id="@+id/spinner_country"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="@dimen/margin_standart_LR"
-        android:entries="@array/countries"/>
+        android:layout_height="@dimen/add_fragment_spinner_height"
+        android:layout_margin="@dimen/margin_standart_LR"/>
 
     <EditText
         android:id="@+id/edit_text_add_city"

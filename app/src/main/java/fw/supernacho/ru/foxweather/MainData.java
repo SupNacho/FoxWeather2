@@ -64,6 +64,10 @@ public class MainData {
         cityDataSource.saveCityWeather(city, System.currentTimeMillis(), 0, 800, json.toString());
     }
 
+    public String getOfflineSrc(String cityName){
+        return cityDataSource.getOfflineCityWeather(cityName);
+    }
+
     public void setContext(Context context) {
         setDataBase(context);
     }

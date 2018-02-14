@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 public class WeatherPreference {
     private static final String APP_PREFFERENCES_CITY = "city";
     private static final String APP_PREFFERENCES_COUNTRY = "country";
-    private static final String MOSCOW = "Moscow";
+    private static final String MOSCOW = "Moscow,RU";
     private SharedPreferences userPreferences;
 
     public WeatherPreference(Activity activity) {

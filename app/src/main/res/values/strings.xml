@@ -38,10 +38,4 @@
     <string name="more_info_wind_night">Night</string>
     <string name="description_main_frame_weather_image">weather image</string>
     <string name="winds_at_this_day_label">Winds at this day:</string>
-    <string-array name="countries">
-        <item>Russia</item>
-        <item>USA</item>
-        <item>Ukraine</item>
-        <item>Great Britan</item>
-    </string-array>
 </resources>

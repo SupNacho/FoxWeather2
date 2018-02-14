@@ -23,6 +23,7 @@ import fw.supernacho.ru.foxweather.prefs.WeatherPreference;
 public class AddCityFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private static final String DEFAULT_COUNTRY_TAG = "RU";
 
+    private WeatherPreference weatherPrefs;
     private Context mainActivity;
     private EditText editTextNewCity;
     private String countryTag;
@@ -91,7 +92,6 @@ public class AddCityFragment extends Fragment implements View.OnClickListener, A
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         countryTag = ((Country)adapterView.getItemAtPosition(i)).getTag();
-        WeatherPreference weatherPrefs = MainData.getInstance().getMain().getWeatherPreference();
         weatherPrefs.setCountry(i);
     }
 
@@ -102,7 +102,7 @@ public class AddCityFragment extends Fragment implements View.OnClickListener, A
 
 
     private void init(View view){
-        WeatherPreference weatherPrefs = MainData.getInstance().getMain().getWeatherPreference();
+        weatherPrefs = MainData.getInstance().getMain().getWeatherPreference();
         editTextNewCity = view.findViewById(R.id.edit_text_add_city);
         Spinner spinnerCountry = view.findViewById(R.id.spinner_country);
         List<Country> countries = MainData.getInstance().getCountries();
