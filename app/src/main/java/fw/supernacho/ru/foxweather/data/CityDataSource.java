@@ -127,6 +127,20 @@ public class CityDataSource {
         return cities;
     }
 
+    public String getOfflineCityWeather(String cityName){
+        Cursor cursor = dataBase.query(DataBaseHelper.TABLE_WEATHER_LOGS,
+                new String[]{DataBaseHelper.COLUMN_CITY, DataBaseHelper.COLUMN_SUMMARY},
+                DataBaseHelper.COLUMN_CITY +" = '" + cityName + "'",
+                null, null, null, null);
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            byte[] blob = cursor.getBlob(1);
+            return new String(blob);
+        } else {
+            return null;
+        }
+    }
+
     public List<Country> getCountries(){
         List<Country> countries = new ArrayList<>();
         Cursor cursor = dataBase.query(DataBaseHelper.TABLE_COUNTRIES, new String[] {DataBaseHelper.COLUMN_ID_COUNTRIES,
